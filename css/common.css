@@ -1,0 +1,481 @@
+body {
+	--bg-color: var(--tg-theme-bg-color);
+	/* font: 12px/18px "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, Verdana, sans-serif; */
+	background-color: var(--bg-color);
+	margin: 0;
+	padding: 0 20px;
+	box-sizing: border-box;
+	background-color: #161616;
+	color: #fff;
+	font-size: 15px;
+
+}
+
+* {
+	box-sizing: border-box;
+}
+
+a {
+	color: #fff;
+	text-decoration: none;
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active,
+a:focus {
+	text-decoration: none;
+	/* -webkit-user-select: none; */
+	-webkit-tap-highlight-color: transparent;
+	/* -moz-user-focus: none;
+	-moz-user-select: none; */
+}
+
+.flex {
+	display: flex;
+	align-items: center;
+}
+
+.flex1 {
+	display: flex;
+	flex-direction: column;
+}
+
+.flex-bw {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.mainColor {
+	color: #EC502C;
+}
+
+.btn {
+	width: 100%;
+	height: 41.5px;
+	background: #ec502c;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 15px;
+	border-radius: 20px;
+}
+
+/* 加入我们 */
+.joinus {
+	margin-top: 44px;
+
+}
+
+.ourCommunity {
+	margin-top: 18px;
+}
+
+.ourCommunity .flex {
+	height: 20px;
+	border-radius: 10px;
+	padding: 0 5px;
+	background-color: #2f2f2f;
+	font-size: 11px;
+	color: #888;
+	margin-right: 5px;
+	justify-content: center;
+	line-height: 1;
+}
+
+.ourCommunity img {
+	width: 13px;
+	height: 13px;
+	margin-right: 3px;
+
+}
+
+.joinus .fs-20 {
+	font-size: 20px;
+}
+
+.joinus .flex-bw {
+	width: 100%;
+	align-items: flex-start;
+	margin-top: 38px;
+}
+
+.joinus .flex1 {
+	/* flex: 1; */
+	align-items: flex-start;
+	gap: 15px;
+	font-size: 18px;
+}
+
+.joinus .flex1 li {
+	margin-bottom: 15px;
+	font-size: 13px;
+	color: #888888;
+}
+
+/* 底部tabbar */
+.tabbar {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 59.5px;
+	background: #262626;
+	border: 0.5px solid #1c2d3c;
+	font-size: 11px;
+	color: #888;
+	justify-content: space-around;
+}
+
+.tabbar .flex1 {
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	gap: 8px;
+	line-height: 1;
+}
+
+.tabbar img {
+	width: 20px;
+	height: 20px;
+}
+
+.tabbar a {
+	color: #888;
+}
+
+/* 头部 */
+.topNav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 44px;
+	z-index: 3;
+	padding: 0 22px;
+	background-color: #161616;
+}
+
+.topNav .notBind {
+
+	width: 82.5px !important;
+	height: 26.5px !important;
+	border: 0.5px solid #ffffff !important;
+	border-radius: 14px !important;
+	justify-content: center;
+	font-size: 12px !important;
+	margin-right: 18px !important;
+	background-color: transparent !important;
+}
+
+.topNav .flex span {
+	margin-right: 10px;
+}
+
+.topNav .notBind button {
+	min-width: 82.5px !important;
+	width: 82.5px !important;
+	height: 26.5px !important;
+	border: none !important;
+	border-radius: 14px !important;
+	justify-content: center;
+	font-size: 12px !important;
+	background-color: transparent !important;
+	padding: 0 !important;
+}
+
+.topNav .notBind button div {
+	font-size: 12px !important;
+	line-height: 1.2;
+	color: #EC502C !important;
+}
+
+.topNav .notBind svg {
+	display: none !important;
+}
+
+.topNav .bind {
+	width: 82.5px;
+	height: 26.5px;
+	border: 0.5px solid #ffffff;
+	border-radius: 14px;
+	justify-content: center;
+	font-size: 12px;
+	margin-right: 18px;
+	color: #EC502C;
+}
+
+.topNav .menu {
+	width: 16px;
+	height: 14px;
+}
+
+.popup {
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: none;
+	/* display: flex; */
+	align-items: center;
+	justify-content: center;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, .5);
+	animation-name: fadeIn;
+	animation-duration: 0.6s;
+	transition: all .5s;
+	z-index: 9;
+}
+
+.overlay {
+	display: none;
+
+}
+
+.hide {
+	animation-name: fadeOut;
+	animation-duration: .6s;
+	transition: all .5s;
+}
+
+.rightPopup {
+	justify-content: flex-end;
+}
+
+.moreModal {
+	min-width: 194px;
+	height: 100vh;
+	background: #161616;
+	border-radius: 20px 20px 20px 0px;
+	align-items: center;
+	animation-name: toLeftAnimate;
+	animation-duration: .3s;
+	padding: 20px 11px;
+
+}
+
+.moreModal .bold {
+	font-size: 20px;
+}
+
+.moreModal .walletBtn {
+	min-width: 171.5px;
+	height: 34px;
+	background: #ec502c;
+	border-radius: 17px;
+	margin: 18px 0 21px;
+	justify-content: center;
+	gap: 9px;
+	font-size: 12px;
+}
+
+.moreModal .walletBtn img {
+	width: 9px;
+	height: 9px;
+}
+
+.moreModal .flex-bw {
+	width: 100%;
+	font-size: 13px;
+	margin-bottom: 20px;
+}
+
+.moreModal .flex-bw img {
+	width: 13px;
+	height: 13px;
+}
+
+.withdrawPopup {
+	align-items: flex-end;
+}
+
+.withdrawModal {
+	width: 100%;
+	min-height: 352px;
+	background: #161616;
+	border-top: 0.5px solid #343434;
+	border-radius: 20px;
+	padding: 19px 15px 37px;
+	font-size: 15px;
+}
+
+.withdrawModal .title {
+	text-align: center;
+	margin-bottom: 34px;
+}
+
+.withdrawModal .balance {
+	font-size: 18px;
+	margin-bottom: 20px;
+}
+
+.withdrawModal .balance .mainColor {
+	margin-left: 5px;
+}
+
+.withdrawModal .tip {
+	font-size: 14px;
+	color: #888;
+}
+
+.withdrawModal input {
+	width: 100%;
+	height: 44px;
+	background: #161616;
+	border: 0.5px solid #343434;
+	border-radius: 22px;
+	padding: 0 25px;
+	color: #fff;
+	outline: none;
+	margin: 33px 0 17px;
+}
+
+.withdrawModal .fee {
+	font-size: 12px;
+	color: #888;
+	justify-content: flex-end;
+	margin-bottom: 38px;
+}
+
+.withdrawModal .btn {
+	height: 49.5px;
+	border-radius: 24.5px;
+}
+
+.loadingModal,
+.toastModal {
+	display: none;
+	position: fixed;
+	z-index: 1000;
+	left: 0;
+	top: 0;
+	width: 100vw;
+	height: 100vh;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.5);
+	font-size: 16px;
+}
+
+.modal-content {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: rgba(0, 0, 0, .8);
+	padding: 20px;
+	border-radius: 5px;
+	width: 300px;
+	text-align: center;
+}
+
+.modal-content img {
+	width: 40px;
+	height: 40rpx;
+}
+
+.loadingModal .modal-content img {
+	animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes slideDown {
+	from {
+		transform: translateY(242px);
+	}
+
+	to {
+		transform: translateY(0);
+	}
+}
+
+/* 弹窗下滑动画 */
+@keyframes slideUp {
+	from {
+		transform: translateY(0);
+	}
+
+	to {
+		transform: translateY(242px);
+	}
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0
+	}
+
+	to {
+		opacity: 1
+	}
+}
+
+@keyframes fadeOut {
+	from {
+		opacity: 1
+	}
+
+	to {
+		opacity: 0
+	}
+}
+
+@keyframes toLeftAnimate {
+	from {
+		transform: translateX(194px);
+	}
+
+	to {
+		transform: translateX(0);
+	}
+}
+
+@keyframes toRightAnimate {
+	from {
+		transform: translateX(0);
+	}
+
+	to {
+		transform: translateX(194px);
+	}
+}
+
+@keyframes zoom {
+	from {
+		transform: scale(0)
+	}
+
+	to {
+		transform: scale(1)
+	}
+}
+
+@keyframes closeZoom {
+	from {
+		transform: scale(1)
+	}
+
+	to {
+		transform: scale(0)
+	}
+}

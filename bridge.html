@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>babydogeswap</title>
+		<link rel="stylesheet" href="./css/common.css" />
+		<link rel="shortcut icon" href="favicon.ico">
+		<style>
+			body {
+				padding-bottom: 90px;
+				padding-top: 44px;
+			}
+
+
+			.fs-20 {
+				font-size: 20px;
+			}
+
+			.dealTitle {
+				margin-bottom: 25px;
+				padding-top: 20px;
+			}
+
+			.rowWrap {
+				margin-bottom: 43px;
+			}
+
+			.rowWrap img {
+				width: 18px;
+				height: 16px;
+			}
+
+			.rowWrap .flex-bw {
+				width: 130px;
+				height: 46.5px;
+				background: rgba(255, 255, 255, 0.03);
+				border: 0.5px solid #343434;
+				border-radius: 23px;
+				padding: 0 8px 0 18px;
+			}
+
+			.rowWrap .flex-bw img {
+				width: 31.5px;
+				height: 32px;
+			}
+
+			.flexCenter {
+				align-items: center;
+			}
+
+			.dealWrap {
+				width: 100%;
+				height: 150.5px;
+				background: rgba(255, 255, 255, 0.03);
+				border: 0.5px solid #343434;
+				border-radius: 20px;
+			}
+
+			.mb-34 {
+				margin-bottom: 34px;
+			}
+
+			.mb-137 {
+				margin-bottom: 137px;
+			}
+
+			.dealWrap .flex-bw {
+				padding: 0 20px;
+			}
+
+			.dealWrap .logo {
+				width: 31.5px;
+				height: 32px;
+				margin-right: 10px;
+			}
+
+			.dealWrap .token {
+				height: 58px;
+			}
+
+			.amountWrap {
+				width: 100%;
+				height: 91.5px;
+				background: rgba(255, 255, 255, 0.03);
+				border: 0.5px solid #343434;
+				border-radius: 20px;
+				padding: 0 22px;
+				font-size: 24px;
+			}
+
+			.amountWrap .fs-14 {
+				font-size: 14px;
+				color: #888;
+			}
+
+			.select {
+				width: 8px;
+				height: 6.5px;
+				margin-left: 7.5px;
+			}
+
+			.modal {
+				position: relative;
+				width: 17.125rem;
+				height: 480px;
+				background: #161616;
+				border-radius: 20px;
+				padding: 38px 31px 57px;
+				align-items: center;
+				font-size: 15px;
+				animation-name: zoom;
+				animation-duration: .3s;
+				transition: all .3s;
+			}
+
+			.modal .close {
+				position: absolute;
+				top: 11px;
+				right: 11px;
+				width: 17.5px;
+				height: 17.5px;
+			}
+
+			.modal .fs-12 {
+				color: #888;
+			}
+
+			.modal .qrcode {
+				width: 100%;
+				height: 191.5px;
+				background: #ffffff;
+				border-radius: 20px;
+				margin: 17px 0 38px;
+			}
+
+			.mt-20 {
+				margin-top: 20px;
+			}
+
+			.mb-20 {
+				margin-bottom: 20px;
+			}
+
+			.modal .flex1 {
+				align-items: center;
+				justify-tracks: space-between;
+			}
+
+			.modal .flex {
+				font-size: 10px;
+				font-weight: bold;
+			}
+
+			.modal .flex span {
+				text-align: center;
+				font-size: 10px;
+				font-weight: bold;
+			}
+
+			.modal .flex img {
+				width: 36.5px;
+				height: 36px;
+				margin-bottom: 8px;
+
+			}
+
+			.rightPopup {
+				justify-content: flex-end;
+			}
+
+			.moreModal {
+				width: 194px;
+				height: 100vh;
+				background: #161616;
+				border-radius: 20px 20px 20px 0px;
+				align-items: center;
+				animation-name: toLeftAnimate;
+				animation-duration: .3s;
+				padding: 20px 11px;
+
+			}
+
+			.moreModal .bold {
+				font-size: 20px;
+			}
+
+			.moreModal .walletBtn {
+				width: 171.5px;
+				height: 34px;
+				background: #ec502c;
+				border-radius: 17px;
+				margin: 18px 0 21px;
+				justify-content: center;
+				gap: 9px;
+				font-size: 12px;
+			}
+
+			.moreModal .walletBtn img {
+				width: 9px;
+				height: 9px;
+			}
+
+			.moreModal .flex-bw {
+				width: 100%;
+				font-size: 13px;
+				margin-bottom: 20px;
+			}
+
+			.moreModal .flex-bw img {
+				width: 13px;
+				height: 13px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<main>
+			<div class="topNav  flex-bw">
+				<span class="bold fs-20 twaName"></span>
+				<div class="flex">
+					<span id="setLang"></span>
+					<div class="flex notBind" id="ton-connect"></div>
+					<!-- <div class="flex bind">0D9...4646</div> -->
+					<img class="menu" onclick="showMore()" src="./images/menu.png" alt="">
+				</div>
+			</div>
+			<div class="dealTitle fs-20" id="bridgeText1">桥</div>
+			<div class="flex-bw rowWrap">
+				<div class="flex-bw">
+					<span>TON</span>
+					<img src="images/eth.png" alt="">
+				</div>
+				<img src="images/enter.png" alt="">
+				<div class="flex-bw">
+					<span>ETH</span>
+					<img src="images/usdt.png" alt="">
+				</div>
+			</div>
+			<div class="flex1 flexCenter">
+				<div class="dealWrap mb-34">
+					<div class="flex-bw token">
+						<span id="bridgeText2">资产</span>
+						<div class="flex">
+							<img class="logo" src="./images/eth.png" alt="">
+							<span id="">ton</span>
+							<img class="select" src="./images/down.png" alt="">
+						</div>
+					</div>
+					<div class="amountWrap flex-bw">
+						<span id="">0</span>
+					</div>
+				</div>
+				<div class="dealWrap mb-137">
+					<div class="flex-bw token">
+						<span id="bridgeText3">你收到的</span>
+						<div class="flex">
+							<img class="logo" src="./images/eth.png" alt="">
+							<span id="">wton</span>
+							<img class="select" src="./images/down.png" alt="">
+						</div>
+					</div>
+					<div class="amountWrap flex-bw">
+						<span id="">0</span>
+					</div>
+				</div>
+			</div>
+			<div class="joinus">
+				<div class="fs-20" id="joinus">加入我们的社区</div>
+				<div class="ourCommunity flex" id="ourCommunity">
+				</div>
+				<div class="flex-bw" id="footerAbout">
+					<div class="flex1">
+						<span id="joinText1">探索</span>
+						<ul id="dt1"></ul>
+					</div>
+					<div class="flex1">
+						<span id="joinText2">用户</span>
+						<ul id="dt2"></ul>
+					</div>
+					<div class="flex1">
+						<span id="joinText3">开发</span>
+						<ul id="dt3"></ul>
+					</div>
+				</div>
+			</div>
+			<div class="tabbar flex">
+				<a class="flex1" href="deal.html">
+					<img src="./images/tab1.png" alt="">
+					<span id="tabbarText1">交易</span>
+				</a>
+				<a class="flex1" href="pool.html">
+					<img src="./images/tab2.png" alt="">
+					<span id="tabbarText2">池子</span>
+				</a>
+				<a class="flex1" href="destroy.html">
+					<img src="./images/tab3.png" alt="">
+					<span id="tabbarText3">销毁</span>
+				</a>
+				<a class="flex1" href="bridge.html">
+					<img src="./images/tabs4.png" alt="">
+					<span class="mainColor" id="tabbarText4">跨链桥</span>
+				</a>
+				<a class="flex1" href="communityToken.html">
+					<img src="./images/tab5.png" alt="">
+					<span id="tabbarText5">社区代币</span>
+				</a>
+			</div>
+
+			<!-- 更多菜单 -->
+			<div class="popup rightPopup" id="morePopup">
+				<div class="moreModal flex1" id="moreModal">
+					<span class="bold twaName"></span>
+					<div class="walletBtn flex">
+						<div class="flex">
+							<span id="moreText1">钱包地址:</span>
+							<span id="walletAddress"></span>
+						</div>
+						<img src="./images/copy.png" onclick="copy()" alt="">
+					</div>
+					<a class="flex-bw" href="index.html">
+						<span id="moreText2">首页</span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="wallet.html">
+						<span id="moreText3">我的资产</span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="ranking.html">
+						<span id="moreText4">排行榜</span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="invite.html">
+						<span id="moreText5">邀请</span>
+						<img src="./images/right.png" alt="">
+					</a>
+				</div>
+			</div>
+			<!-- 加载弹窗 -->
+			<div id="loadingModal" class="loadingModal">
+				<div class="modal-content">
+					<p id="loadText"></p>
+					<img src="images/loading.png" alt="" />
+				</div>
+			</div>
+			<!-- 提示弹窗 -->
+			<div id="toastModal" class="toastModal">
+				<div class="modal-content">
+					<p id="toastMsg"></p>
+				</div>
+			</div>
+		</main>
+
+		<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.16.0/js/md5.js"></script>
+		<script src="./js/http.js"></script>
+		<script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+		<!-- <script src="https://telegram.org/js/telegram-web-app.js"></script> -->
+		<script>
+			function trsAddress(address) {
+				let addr = TonConnectSDK.toUserFriendlyAddress(address)
+				sessionStorage.setItem('userAddress', addr)
+				$('#walletAddress').text(sliceAddress(addr, 4, 4))
+				return addr
+			}
+			async function loadData() {
+				await showLoading()
+				await getIndexInfo()
+				reloadText()
+				loadFooterText()
+				hideLoading()
+			}
+			if (token) {
+				loadData()
+			}
+
+			function reloadText() {
+				if (baseLang == 'EN') {
+					$('#bridgeText1').html('bridge')
+					$('#bridgeText2').html('property')
+					$('#bridgeText3').html('What you received')
+				} else {
+					$('#bridgeText1').html('桥')
+					$('#bridgeText2').html('资产')
+					$('#bridgeText3').html('你收到的')
+				}
+			}
+			// 点击模态框外部时，也关闭它  
+			window.onclick = function(event) {
+				if (event.target == popup) {
+					popup.style.display = "none";
+				} else if (event.target == morePopup) {
+					moreModal.style.animation = "toRightAnimate 0.4s forwards"; // 应用上滑动画
+					// moreModal.classList.remove('active')
+					setTimeout(() => {
+						morePopup.style.display = "none";
+					}, 200)
+				}
+			}
+
+			// Init TWA
+			Telegram.WebApp.ready();
+
+			// Event occurs whenever theme settings are changed in the user's Telegram app (including switching to night mode).
+			Telegram.WebApp.onEvent('themeChanged', function() {
+				document.documentElement.className = Telegram.WebApp.colorScheme;
+			});
+
+
+
+
+
+
+			function setViewportData() {
+				var sizeEl = document.getElementById('viewport-params-size');
+				sizeEl.innerText = 'width: ' + window.innerWidth + ' x ' +
+					'height: ' + Telegram.WebApp.viewportStableHeight;
+
+				var expandEl = document.querySelector('#viewport-params-expand');
+				expandEl.innerText = 'Is Expanded: ' + (Telegram.WebApp.isExpanded ? 'true' : 'false');
+			}
+
+			Telegram.WebApp.setHeaderColor('secondary_bg_color');
+
+			setViewportData();
+			Telegram.WebApp.onEvent('viewportChanged', setViewportData);
+
+			Telegram.WebApp.onEvent('themeChanged', function() {
+				document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
+			});
+		</script>
+
+		<!-- Eruda is console for mobile browsers -->
+		<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+		<script>
+			eruda.init();
+		</script>
+	</body>
+</html>

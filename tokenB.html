@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>babydogeswap</title>
+		<link rel="stylesheet" href="./css/common.css" />
+		<link rel="shortcut icon" href="favicon.ico">
+		<style>
+			body {
+				padding-bottom: 90px;
+				padding-top: 44px;
+			}
+
+
+			.fs-20 {
+				font-size: 20px;
+			}
+
+
+			.back {
+				padding: 20px 0 25px 0;
+			}
+
+			.back img {
+				width: 20px;
+				height: 20px;
+			}
+
+			.dataWrap {
+				width: 100%;
+				height: 173px;
+				background: rgba(255, 255, 255, 0.03);
+				border: 0.5px solid #343434;
+				border-radius: 20px;
+				padding: 24px 20px;
+				margin-bottom: 20px;
+				font-size: 24px;
+				align-items: center;
+				background-image: url('images/bg.png');
+				background-size: 375px 130px;
+				background-position: -23px 28px;
+			}
+
+			.dataWrap .grey {
+				font-size: 12px;
+				color: #888;
+				margin-bottom: 17px;
+			}
+
+			.dataWrap .btn {
+				width: 270.5px;
+				height: 41.5px;
+				margin-top: 20px;
+			}
+
+			.tabs {
+				position: relative;
+				font-size: 14px;
+				color: #888;
+			}
+
+			.tabs .flex1 {
+				align-items: center;
+			}
+
+			.tabs .indicator {
+				position: absolute;
+				bottom: -7px;
+				left: 12px;
+				height: 3px;
+				background: #ec502c;
+				border-radius: 1.5px;
+				transition: transform 0.3s ease;
+				width: 30px;
+			}
+
+			.tabs .active {
+				color: #fff;
+			}
+
+			.tabs .active .line {
+				background: #ec502c;
+			}
+
+			.recordWrap {
+				margin-top: 23px;
+				width: 100%;
+				min-height: 305px;
+				background: rgba(255, 255, 255, 0.03);
+				border: 0.5px solid #343434;
+				border-radius: 20px;
+				padding: 0 8px;
+				font-size: 12px;
+			}
+
+			.recordWrap .flex {
+				width: 100%;
+				height: 54px;
+				border-bottom: 1px solid #343434;
+			}
+
+			.recordWrap>.flex>.flex1 {
+				align-items: center;
+				flex: 1;
+			}
+
+			.recordWrap .flex .flex {
+				flex: 1.5;
+				padding-left: 10px;
+				justify-content: flex-start;
+			}
+
+			.recordWrap .flex .flex .flex1 {
+				align-items: center;
+			}
+
+			.recordWrap .flex>span {
+				flex: 1;
+			}
+
+			.recordWrap .green {
+				color: #24E564;
+				text-align: center;
+			}
+
+			.recordWrap .red {
+				color: #E52424;
+				text-align: center;
+			}
+
+			.recordWrap .btn {
+				width: 38px;
+				height: 19.5px;
+				font-size: 11px;
+				margin-left: 5px;
+			}
+
+			.tab-panel {
+				display: none;
+				padding: 20px;
+			}
+
+			.tab-panel.active {
+				display: flex;
+				flex-direction: column;
+			}
+
+			.tab-link.active {
+				color: #fff;
+			}
+
+			.empty {
+				justify-content: center;
+			}
+
+			.mb-8 {
+				margin-bottom: 8px;
+			}
+
+			.button {
+				margin: 35px 0 51px;
+			}
+
+			.mb-15 {
+				margin-bottom: 15px;
+			}
+
+			.modal {
+				position: relative;
+				width: 17.125rem;
+				height: 480px;
+				background: #161616;
+				border-radius: 20px;
+				padding: 38px 31px 57px;
+				align-items: center;
+				font-size: 15px;
+				animation-name: zoom;
+				animation-duration: .3s;
+				transition: all .3s;
+			}
+
+			.modal .close {
+				position: absolute;
+				top: 11px;
+				right: 11px;
+				width: 17.5px;
+				height: 17.5px;
+			}
+
+			.modal .fs-12 {
+				color: #888;
+			}
+
+			.modal .qrcode {
+				width: 100%;
+				height: 191.5px;
+				background: #ffffff;
+				border-radius: 20px;
+				margin: 17px 0 38px;
+			}
+
+			.mt-20 {
+				margin-top: 20px;
+			}
+
+			.mb-20 {
+				margin-bottom: 20px;
+			}
+
+			.modal .flex1 {
+				align-items: center;
+				justify-tracks: space-between;
+			}
+
+			.modal .flex {
+				font-size: 10px;
+				font-weight: bold;
+			}
+
+			.modal .flex span {
+				text-align: center;
+				font-size: 10px;
+				font-weight: bold;
+			}
+
+			.modal .flex img {
+				width: 36.5px;
+				height: 36px;
+				margin-bottom: 8px;
+
+			}
+
+			.modal1 {
+				width: 274px;
+				height: 312.5px;
+				background: #161616;
+				border-radius: 20px;
+				font-size: 15px;
+				align-items: center;
+				justify-content: center;
+				nimation-name: zoom;
+				animation-duration: .3s;
+				transition: .2s;
+			}
+
+			.modal1 .flex {
+				font-size: 12px;
+				color: #888;
+				margin: 20px 0 12px;
+			}
+
+			.modal1 .flex .amount {
+				font-size: 30px;
+				color: #EC502C;
+				font-weight: bold;
+			}
+
+			.modal1 img {
+				width: 87px;
+				height: 96.5px;
+			}
+
+			.modal1 .btn {
+				width: 211px;
+				height: 39.5px;
+				background: #ec502c;
+				border-radius: 20px;
+				justify-content: center;
+				margin-top: 23px;
+				color: #fff;
+				font-size: 12px;
+			}
+
+			.rightPopup {
+				justify-content: flex-end;
+			}
+
+			.moreModal {
+				width: 194px;
+				height: 100vh;
+				background: #161616;
+				border-radius: 20px 20px 20px 0px;
+				align-items: center;
+				animation-name: toLeftAnimate;
+				animation-duration: .3s;
+				padding: 20px 11px;
+
+			}
+
+			.moreModal .bold {
+				font-size: 20px;
+			}
+
+			.moreModal .walletBtn {
+				width: 171.5px;
+				height: 34px;
+				background: #ec502c;
+				border-radius: 17px;
+				margin: 18px 0 21px;
+				justify-content: center;
+				gap: 9px;
+				font-size: 12px;
+			}
+
+			.moreModal .walletBtn img {
+				width: 9px;
+				height: 9px;
+			}
+
+			.moreModal .flex-bw {
+				width: 100%;
+				font-size: 13px;
+				margin-bottom: 20px;
+			}
+
+			.moreModal .flex-bw img {
+				width: 13px;
+				height: 13px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<main>
+			<div class="topNav  flex-bw">
+				<span class="bold fs-20 twaName"></span>
+				<div class="flex">
+					<span id="setLang"></span>
+					<div class="flex notBind" id="ton-connect"></div>
+					<!-- <div class="flex bind">0D9...4646</div> -->
+					<img class="menu" onclick="showMore()" src="./images/menu.png" alt="">
+				</div>
+			</div>
+			<a class="back flex-bw" href="wallet.html">
+				<img src="images/back.png" alt="">
+			</a>
+			<div class="flex1 dataWrap">
+				<span class="grey" id="tokenBText1"></span>
+				<span class="credit">0</span>
+				<div class="btn" id="tokenBText2" onclick="showPopup()"></div>
+			</div>
+			<div class="flex-bw tabs">
+				<div class="flex1 tab-link" id="tabs-1" onclick="changeTab(0)">
+					<span id="tokenBText3"></span>
+				</div>
+				<div class="flex1 tab-link" id="tabs-2" onclick="changeTab(1)">
+					<span id="tokenBText4"></span>
+				</div>
+				<div class="indicator" id="indicator"></div>
+			</div>
+			<div class="tab-content">
+				<div class=" recordWrap tab-panel" id="tab-1">
+
+				</div>
+				<div class=" recordWrap tab-panel" id="tab-2">
+
+				</div>
+			</div>
+			<!-- 提取弹窗 -->
+			<div class="popup withdrawPopup" id="withdrawPopup">
+				<div class="flex1 withdrawModal" id="withdrawModal">
+					<span class="title" id="tokenBText5"></span>
+					<div class="flex balance">
+						<div id="tokenBText6"></div>
+						<span class="mainColor credit">0</span>
+					</div>
+					<div class="tip" id="tokenBText7"></div>
+					<input type="number" id="input" placeholder="请输入提取数量">
+					<div class="fee flex">
+						<span  id="tokenBText8"></span>
+						<span class="percent" id="percent">0%</span>
+					</div>
+					<div class="btn"  id="tokenBText9" onclick="toWithdraw()"></div>
+				</div>
+			</div>
+			<!-- 更多菜单 -->
+			<div class="popup rightPopup" id="morePopup">
+				<div class="moreModal flex1" id="moreModal">
+					<span class="bold twaName"></span>
+					<div class="walletBtn flex">
+						<div class="flex">
+							<span id="moreText1"></span>
+							<span id="walletAddress"></span>
+						</div>
+						<img src="./images/copy.png" onclick="copy()" alt="">
+					</div>
+					<a class="flex-bw" href="index.html">
+						<span id="moreText2"></span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="wallet.html">
+						<span id="moreText3"></span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="ranking.html">
+						<span id="moreText4"></span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="invite.html">
+						<span id="moreText5"></span>
+						<img src="./images/right.png" alt="">
+					</a>
+				</div>
+			</div>
+			<!-- 加载弹窗 -->
+			<div id="loadingModal" class="loadingModal">
+				<div class="modal-content">
+					<p id="loadText"></p>
+					<img src="images/loading.png" alt="" />
+				</div>
+			</div>
+			<!-- 提示弹窗 -->
+			<div id="toastModal" class="toastModal">
+				<div class="modal-content">
+					<p id="toastMsg"></p>
+				</div>
+			</div>
+		</main>
+
+		<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.16.0/js/md5.js"></script>
+		<script src="./js/http.js"></script>
+		<script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+		<!-- <script src="https://telegram.org/js/telegram-web-app.js"></script> -->
+		<script>
+			let withdrawPopup = document.getElementById('withdrawPopup')
+			let withdrawModal = document.getElementById('withdrawModal')
+			let input = document.getElementById('input')
+			let current = 0
+
+			function trsAddress(address) {
+				let addr = TonConnectSDK.toUserFriendlyAddress(address)
+				sessionStorage.setItem('userAddress', addr)
+				$('#walletAddress').text(sliceAddress(addr, 4, 4))
+				return addr
+			}
+
+			function toWithdraw() {
+				let price = input.value
+				if (Number(price) <= 0) {
+					return toast(baseLang=='EN'?'Please enter the extraction quantity':'请输入提取数量')
+				}
+				apiHttp($, "/api/contract/withdraw/index", {
+					price: price,
+					credittype: 'credit3'
+				}).then(res => {
+					if (res.code == 1) {
+						toast(res.msg)
+						input.value = ''
+						withdrawModal.style.animation = "slideUp 0.4s forwards"; // 应用上滑动画
+						// moreModal.classList.remove('active')
+						setTimeout(() => {
+							withdrawPopup.style.display = "none";
+						}, 200)
+						getAsset()
+						if (current == 0) {
+							getRebateList()
+						} else {
+							getWithdrawList()
+						}
+					}
+				})
+			}
+
+			function showPopup() {
+				withdrawPopup.style.display = 'flex'
+				withdrawModal.style.animation = "slideDown 0.4s forwards"; // 应用下滑动画  
+			};
+
+			function getAsset() {
+				apiHttp($, "/api/contract/user/index").then(res => {
+					if (res.code == 1) {
+						document.querySelectorAll('.credit').forEach(item => {
+							item.innerHTML = res.data.credit3
+						})
+						document.getElementById('percent').innerHTML = res.data.withdrawPercent + '%'
+					}
+				})
+			}
+
+			function getRebateList() {
+				apiHttp($, "/api/contract/user/getRebateList", {
+					credittype: 'credit3'
+				}).then(res => {
+					if (res.code == 1) {
+						let typesInfo = res.data.typesInfo
+						let list = res.data.list
+						let recordItem = ''
+						let tab1 = document.getElementById('tab-1')
+						if (!list.length) {
+							recordItem = `<div class="empty flex">
+								${baseLang=='EN'?'No records available at the moment':'暂无记录'}
+							</div>`
+							tab1.innerHTML = recordItem
+
+						} else {
+							list.forEach(item => {
+								recordItem += `<div class="flex">
+								<span>${typesInfo[item.types]}</span>
+								<span class="${Number(item.price) < 0?'red':'green'}">${Number(item.price) < 0 ?item.price:'+'+item.price}</span>
+								<div class="flex1">
+									<span>${formatTimestamp(item.createtime,'date')}</span>
+									<span>${formatTimestamp(item.createtime,'time')}</span>
+								</div>
+							</div>`
+							})
+							tab1.innerHTML = recordItem
+						}
+					}
+				})
+			}
+
+			function getWithdrawList() {
+				apiHttp($, "/api/contract/withdraw/getList", {
+					credittype: 'credit3'
+				}).then(res => {
+					if (res.code == 1) {
+						let statusInfo = res.data.statusInfo
+						let list = res.data.list
+						let recordItem = ''
+						let tab2 = document.getElementById('tab-2')
+
+
+						if (!list.length) {
+							recordItem = `<div class="empty flex">
+								${baseLang=='EN'?'No records available at the moment':'暂无记录'}
+							</div>`
+							tab2.innerHTML = recordItem
+
+						} else {
+							list.forEach(item => {
+								if (item.status == 2) {
+									recordItem += `<div class="flex">
+								<span>${baseLang=='EN'?'extract':'提取'}</span>
+								<span class="red">${item.price}</span>
+								<div class="flex">
+									<div class="flex1">
+										<span>${formatTimestamp(item.createtime,'date')}</span>
+										<span>${formatTimestamp(item.createtime,'time')}</span>
+									</div>
+									<div class="btn" onclick="${toReceive()}">${baseLang=='EN'?'receive':'领取'}</div>
+								</div>
+							</div>`
+								} else {
+									recordItem += `<div class="flex">
+								<span>${baseLang=='EN'?'extract':'提取'}</span>
+								<span class="red">${item.price}</span>
+								<div class="flex">
+									<div class="flex1">
+										<span>${formatTimestamp(item.createtime,'date')}</span>
+										<span>${formatTimestamp(item.createtime,'time')}</span>
+									</div>
+								</div>
+							</div>`
+								}
+							})
+							tab2.innerHTML = recordItem
+						}
+					}
+				})
+			}
+
+			async function loadData() {
+				await showLoading()
+				await getIndexInfo()
+				await getAsset()
+				reloadText()
+				loadFooterText()
+				hideLoading()
+			}
+			if (token) {
+				loadData()
+			}
+
+			function reloadText() {
+				if (baseLang == 'EN') {
+					$('#tokenBText1').html('Withdrawable BDS')
+					$('#tokenBText2').html('extract')
+					$('#tokenBText3').html('Revenue records')
+					$('#tokenBText4').html('Extract Records')
+					$('#tokenBText5').html('extract')
+					$('#tokenBText6').html('Current BDS:')
+					$('#tokenBText7').html('Please enter the extraction quantity')
+					$('#tokenBText8').html('Service Charge:')
+					$('#tokenBText9').html('extract')
+					input.placeholder = "Please enter the extraction quantity";
+				} else {
+					$('#tokenBText1').html('可提现BDS')
+					$('#tokenBText2').html('提取')
+					$('#tokenBText3').html('收益记录')
+					$('#tokenBText4').html('提取记录')
+					$('#tokenBText5').html('提取')
+					$('#tokenBText6').html('当前BDS：')
+					$('#tokenBText7').html('请输入提取数量')
+					$('#tokenBText8').html('手续费：')
+					$('#tokenBText9').html('提取')
+					input.placeholder = "请输入提取数量";
+				}
+				initTab()
+			}
+
+			function initTab() {
+				let element = document.getElementById('tokenBText3')
+				let style = window.getComputedStyle(element);
+				let width = parseFloat(style.width); // 注意：这可能需要处理单位  
+				document.querySelector('.indicator').style.left = `${(width - 30) / 2}px`;
+			}
+
+			function changeTab(index) {
+				console.log(index);
+				current = index
+				// 移除所有tab-panel的active类  
+				document.querySelectorAll('.tab-panel').forEach(function(panel) {
+					panel.classList.remove('active');
+				});
+				document.querySelectorAll('.tab-link').forEach(function(panel) {
+					panel.classList.remove('active');
+				});
+				// 添加active类到选中的tab-panel  
+				let element = document.getElementById('tokenBText3')
+				let style = window.getComputedStyle(element);
+				let width = parseFloat(style.width); // 注意：这可能需要处理单位  
+				document.getElementById('tabs-' + (index + 1)).classList.add('active');
+				document.getElementById('tab-' + (index + 1)).classList.add('active');
+				const newLeft = index * (window.innerWidth - 40 - width) + 'px'; // 计算新的left值  
+				document.querySelector('.indicator').style.left = `${(width - 30) / 2}px`;
+				document.querySelector('.indicator').style.transform = `translateX(${newLeft})`;
+				if (index == 0) {
+					getRebateList()
+				} else {
+					getWithdrawList()
+				}
+			}
+			changeTab(0);
+			// 点击模态框外部时，也关闭它  
+			window.onclick = function(event) {
+				if (event.target == morePopup) {
+					moreModal.style.animation = "toRightAnimate 0.4s forwards"; // 应用上滑动画
+					// moreModal.classList.remove('active')
+					setTimeout(() => {
+						morePopup.style.display = "none";
+					}, 200)
+				} else if (event.target == withdrawPopup) {
+					withdrawModal.style.animation = "slideUp 0.4s forwards"; // 应用上滑动画
+					// moreModal.classList.remove('active')
+					setTimeout(() => {
+						withdrawPopup.style.display = "none";
+					}, 200)
+				}
+			}
+			// Init TWA
+			Telegram.WebApp.ready();
+
+			// Event occurs whenever theme settings are changed in the user's Telegram app (including switching to night mode).
+			Telegram.WebApp.onEvent('themeChanged', function() {
+				document.documentElement.className = Telegram.WebApp.colorScheme;
+			});
+
+			function setViewportData() {
+				var sizeEl = document.getElementById('viewport-params-size');
+				sizeEl.innerText = 'width: ' + window.innerWidth + ' x ' +
+					'height: ' + Telegram.WebApp.viewportStableHeight;
+
+				var expandEl = document.querySelector('#viewport-params-expand');
+				expandEl.innerText = 'Is Expanded: ' + (Telegram.WebApp.isExpanded ? 'true' : 'false');
+			}
+
+			Telegram.WebApp.setHeaderColor('secondary_bg_color');
+
+			setViewportData();
+			Telegram.WebApp.onEvent('viewportChanged', setViewportData);
+
+			Telegram.WebApp.onEvent('themeChanged', function() {
+				document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
+			});
+		</script>
+
+		<!-- Eruda is console for mobile browsers -->
+		<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+		<script>
+			eruda.init();
+		</script>
+	</body>
+</html>

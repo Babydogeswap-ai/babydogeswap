@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>babydogeswap</title>
+		<link rel="stylesheet" href="./css/common.css" />
+		<link rel="shortcut icon" href="favicon.ico">
+		<style>
+			body {
+				padding-bottom: 90px;
+				padding-top: 44px;
+			}
+
+
+			.fs-20 {
+				font-size: 20px;
+			}
+
+			.dealTitle .refresh {
+				width: 23px;
+				height: 19px;
+				margin-right: 23px;
+			}
+
+			.dealTitle img {
+				width: 22.5px;
+				height: 22.5px;
+				margin: 20px 0 24px;
+			}
+
+			.flexCenter {
+				align-items: center;
+			}
+
+			.dealWrap {
+				width: 331px;
+				height: 150.5px;
+				background: rgba(255, 255, 255, 0.03);
+				border: 0.5px solid #343434;
+				border-radius: 20px;
+			}
+
+			.dealWrap .flex-bw {
+				padding: 0 20px;
+			}
+
+			.dealWrap .logo {
+				width: 31.5px;
+				height: 32px;
+				margin-right: 10px;
+			}
+
+			.dealWrap .token {
+				height: 58px;
+			}
+
+			.amountWrap {
+				width: 331px;
+				height: 91.5px;
+				background: rgba(255, 255, 255, 0.03);
+				border: 0.5px solid #343434;
+				border-radius: 20px;
+				padding: 0 22px;
+				font-size: 24px;
+			}
+
+			.amountWrap .fs-14 {
+				font-size: 14px;
+				color: #888;
+			}
+
+			.select {
+				width: 8px;
+				height: 6.5px;
+				margin-left: 7.5px;
+			}
+
+			.exchangeImg {
+				width: 42px;
+				height: 40px;
+				margin: 23px 0 29px;
+			}
+
+			.flexCenter .computed {
+				color: #888;
+				align-self: flex-start;
+				margin: 16px 0 64px;
+			}
+
+			.flexCenter .btn {
+				width: 331px;
+				height: 41.5px;
+				background: #ec502c;
+				border-radius: 20px;
+			}
+
+			.modal {
+				position: relative;
+				width: 17.125rem;
+				height: 480px;
+				background: #161616;
+				border-radius: 20px;
+				padding: 38px 31px 57px;
+				align-items: center;
+				font-size: 15px;
+				animation-name: zoom;
+				animation-duration: .3s;
+				transition: all .3s;
+			}
+
+			.modal .close {
+				position: absolute;
+				top: 11px;
+				right: 11px;
+				width: 17.5px;
+				height: 17.5px;
+			}
+
+			.modal .fs-12 {
+				color: #888;
+			}
+
+			.modal .qrcode {
+				width: 100%;
+				height: 191.5px;
+				background: #ffffff;
+				border-radius: 20px;
+				margin: 17px 0 38px;
+			}
+
+			.mt-20 {
+				margin-top: 20px;
+			}
+
+			.mb-20 {
+				margin-bottom: 20px;
+			}
+
+			.modal .flex1 {
+				align-items: center;
+				justify-tracks: space-between;
+			}
+
+			.modal .flex {
+				font-size: 10px;
+				font-weight: bold;
+			}
+
+			.modal .flex span {
+				text-align: center;
+				font-size: 10px;
+				font-weight: bold;
+			}
+
+			.modal .flex img {
+				width: 36.5px;
+				height: 36px;
+				margin-bottom: 8px;
+
+			}
+
+			.modal1 {
+				width: 274px;
+				height: 312.5px;
+				background: #161616;
+				border-radius: 20px;
+				font-size: 15px;
+				align-items: center;
+				justify-content: center;
+				nimation-name: zoom;
+				animation-duration: .3s;
+				transition: .2s;
+			}
+
+			.modal1 .flex {
+				font-size: 12px;
+				color: #888;
+				margin: 20px 0 12px;
+			}
+
+			.modal1 .flex .amount {
+				font-size: 30px;
+				color: #EC502C;
+				font-weight: bold;
+			}
+
+			.modal1 img {
+				width: 87px;
+				height: 96.5px;
+			}
+
+			.modal1 .btn {
+				width: 211px;
+				height: 39.5px;
+				background: #ec502c;
+				border-radius: 20px;
+				justify-content: center;
+				margin-top: 23px;
+				color: #fff;
+				font-size: 12px;
+			}
+
+			.rightPopup {
+				justify-content: flex-end;
+			}
+
+			.moreModal {
+				width: 194px;
+				height: 100vh;
+				background: #161616;
+				border-radius: 20px 20px 20px 0px;
+				align-items: center;
+				animation-name: toLeftAnimate;
+				animation-duration: .3s;
+				padding: 20px 11px;
+
+			}
+
+			.moreModal .bold {
+				font-size: 20px;
+			}
+
+			.moreModal .walletBtn {
+				width: 171.5px;
+				height: 34px;
+				background: #ec502c;
+				border-radius: 17px;
+				margin: 18px 0 21px;
+				justify-content: center;
+				gap: 9px;
+				font-size: 12px;
+			}
+
+			.moreModal .walletBtn img {
+				width: 9px;
+				height: 9px;
+			}
+
+			.moreModal .flex-bw {
+				width: 100%;
+				font-size: 13px;
+				margin-bottom: 20px;
+			}
+
+			.moreModal .flex-bw img {
+				width: 13px;
+				height: 13px;
+			}
+
+			.assetPopup,
+			.setPopup {
+				align-items: flex-end;
+			}
+
+			.assetModal {
+				width: 100%;
+				height: 452px;
+				background: #161616;
+				border-radius: 20px;
+				padding: 19px 30px;
+				font-size: 14px;
+				border-top: 1px solid #343434;
+			}
+
+			.assetModal .title {
+				font-size: 15px;
+				text-align: center;
+				margin-bottom: 38px;
+			}
+
+			.assetModal .flex-bw {
+				margin-bottom: 20px;
+			}
+
+			.assetModal .flex-bw .dot {
+				width: 4px;
+				height: 4px;
+				/* background-color: #276AF6; */
+				margin-right: 5px;
+			}
+
+			.listWrap {
+				overflow-y: scroll;
+			}
+
+			.setModal {
+				width: 100%;
+				min-height: 352px;
+				background: #161616;
+				border-top: 1px solid #343434;
+				border-radius: 20px;
+				font-size: 15px;
+				padding: 19px 20px 37px;
+			}
+
+			.setModal .title {
+				margin-bottom: 34px;
+				text-align: center;
+			}
+
+			.setModal .fs-18 {
+				font-size: 18px;
+				margin-bottom: 15px;
+			}
+
+			.setModal .tip {
+				font-size: 14px;
+				color: #888;
+				margin-bottom: 33px;
+			}
+
+			.setModal .flex-bw {
+				width: 100%;
+				margin-bottom: 67px;
+			}
+
+			.setModal .flex-bw .flex {
+				width: 107.5px;
+				height: 44px;
+				background: #161616;
+				border: 0.5px solid #343434;
+				border-radius: 22px;
+				justify-content: center;
+			}
+
+			.setModal .flex-bw .selected {
+				color: #EC502C;
+				border: 0.5px solid #EC502C;
+			}
+
+			.setModal .btn {
+				height: 49.5px;
+				border-radius: 24.5px;
+			}
+
+			/* 弹窗上滑动画 */
+			@keyframes slideDown {
+				from {
+					transform: translateY(242px);
+				}
+
+				to {
+					transform: translateY(0);
+				}
+			}
+
+			/* 弹窗下滑动画 */
+			@keyframes slideUp {
+				from {
+					transform: translateY(0);
+				}
+
+				to {
+					transform: translateY(242px);
+				}
+			}
+
+			@keyframes rotate {
+				from {
+					transform: rotate(0deg);
+				}
+
+				to {
+					transform: rotate(360deg);
+				}
+			}
+
+			/* 按钮旋转动画类 */
+			.rotate-animation {
+				animation: rotate 1s linear;
+			}
+		</style>
+	</head>
+
+	<body>
+		<main>
+			<div class="topNav flex-bw">
+				<span class="bold fs-20 twaName"></span>
+				<div class="flex">
+					<span id="setLang"></span>
+					<div class="flex notBind" id="ton-connect"></div>
+					<!-- <div class="flex bind">0D9...4646</div> -->
+					<img class="menu" onclick="showMore()" src="./images/menu.png" alt="">
+				</div>
+			</div>
+			<div class="flex-bw dealTitle">
+				<span class="fs-20" id="dealText1">交易</span>
+				<div id="">
+					<img class="refresh" onclick="toRefresh()" id="refresh" src="./images/refresh.png" alt="">
+					<img class="set" onclick="showSet()" src="./images/set.png" alt="">
+				</div>
+			</div>
+			<div class="flex1 flexCenter">
+				<div class="dealWrap">
+					<div class="flex-bw token">
+						<span id="dealText2">从</span>
+						<div class="flex" onclick="showPopup()">
+							<img class="logo" src="./images/eth.png" alt="">
+							<span id="">TON</span>
+							<img class="select" src="./images/down.png" alt="">
+						</div>
+					</div>
+					<div class="amountWrap flex-bw">
+						<span id="">0</span>
+						<span class="fs-14">≈$0</span>
+					</div>
+				</div>
+				<img class="exchangeImg" src="./images/exchange.png" alt="" />
+				<div class="dealWrap">
+					<div class="flex-bw token">
+						<span id="dealText3">至</span>
+						<div class="flex" onclick="showPopup()">
+							<img class="logo" src="./images/usdt.png" alt="">
+							<span id="">Lon</span>
+							<img class="select" src="./images/down.png" alt="">
+						</div>
+					</div>
+					<div class="amountWrap flex-bw">
+						<span id="">0</span>
+						<span class="fs-14">≈0</span>
+					</div>
+				</div>
+				<span class="computed">1Ton≈1Lon</span>
+				<div class="btn" id="dealText4">兑换</div>
+			</div>
+			<!-- 设置弹窗 -->
+			<div class="popup setPopup" id="setPopup">
+				<div class="flex1 setModal" id="setModal">
+					<span class="title" id="dealText5"></span>
+					<div class="fs-18" id="dealText6"></div>
+					<div class="tip" id="dealText7"></div>
+					<div class="flex-bw">
+						<div class="flex">1%</div>
+						<div class="flex">5%</div>
+						<div class="flex">10%</div>
+					</div>
+					<div class="btn" id="dealText8"></div>
+				</div>
+			</div>
+			<!-- 选择资产弹窗 -->
+			<div class="popup assetPopup" id="assetPopup">
+				<div class="flex1 assetModal" id="assetModal">
+					<span class="title" id="dealText9"></span>
+					<div class="listWrap">
+						<div class="flex-bw">
+							<div class="flex">
+								<div class="dot"></div>
+								<span>ETH</span>
+							</div>
+							<span>$0</span>
+						</div>
+						<div class="flex-bw">
+							<div class="flex">
+								<div class="dot"></div>
+								<span>ETH</span>
+							</div>
+							<span>$0</span>
+						</div>
+						<div class="flex-bw">
+							<div class="flex">
+								<div class="dot"></div>
+								<span>ETH</span>
+							</div>
+							<span>$0</span>
+						</div>
+						<div class="flex-bw">
+							<div class="flex">
+								<div class="dot"></div>
+								<span>ETH</span>
+							</div>
+							<span>$0</span>
+						</div>
+						<div class="flex-bw">
+							<div class="flex">
+								<div class="dot"></div>
+								<span>ETH</span>
+							</div>
+							<span>$0</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="joinus">
+				<div class="fs-20" id="joinus">加入我们的社区</div>
+				<div class="ourCommunity flex" id="ourCommunity">
+				</div>
+				<div class="flex-bw" id="footerAbout">
+					<div class="flex1">
+						<span id="joinText1">探索</span>
+						<ul id="dt1"></ul>
+					</div>
+					<div class="flex1">
+						<span id="joinText2">用户</span>
+						<ul id="dt2"></ul>
+					</div>
+					<div class="flex1">
+						<span id="joinText3">开发</span>
+						<ul id="dt3"></ul>
+					</div>
+				</div>
+			</div>
+			<div class="tabbar flex">
+				<a class="flex1" href="deal.html">
+					<img src="./images/tabs1.png" alt="">
+					<span class="mainColor" id="tabbarText1">交易</span>
+				</a>
+				<a class="flex1" href="pool.html">
+					<img src="./images/tab2.png" alt="">
+					<span id="tabbarText2">池子</span>
+				</a>
+				<a class="flex1" href="destroy.html">
+					<img src="./images/tab3.png" alt="">
+					<span id="tabbarText3">销毁</span>
+				</a>
+				<a class="flex1" href="bridge.html">
+					<img src="./images/tab4.png" alt="">
+					<span id="tabbarText4">跨链桥</span>
+				</a>
+				<a class="flex1" href="communityToken.html">
+					<img src="./images/tab5.png" alt="">
+					<span id="tabbarText5">社区代币</span>
+				</a>
+			</div>
+			
+			<!-- 更多菜单 -->
+			<div class="popup rightPopup" id="morePopup">
+				<div class="moreModal flex1" id="moreModal">
+					<span class="bold twaName"></span>
+					<div class="walletBtn flex">
+						<div class="flex">
+							<span id="moreText1">钱包地址:</span>
+							<span id="walletAddress"></span>
+						</div>
+						<img src="./images/copy.png" onclick="copy()" alt="">
+					</div>
+					<a class="flex-bw" href="index.html">
+						<span id="moreText2">首页</span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="wallet.html">
+						<span id="moreText3">我的资产</span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="ranking.html">
+						<span id="moreText4">排行榜</span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="invite.html">
+						<span id="moreText5">邀请</span>
+						<img src="./images/right.png" alt="">
+					</a>
+				</div>
+			</div>
+			<!-- 加载弹窗 -->
+			<div id="loadingModal" class="loadingModal">
+				<div class="modal-content">
+					<p id="loadText"></p>
+					<img src="images/loading.png" alt="" />
+				</div>
+			</div>
+			<!-- 提示弹窗 -->
+			<div id="toastModal" class="toastModal">
+				<div class="modal-content">
+					<p id="toastMsg"></p>
+				</div>
+			</div>
+		</main>
+		<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.16.0/js/md5.js"></script>
+		<script src="./js/http.js"></script>
+		<script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+		<!-- <script src="https://telegram.org/js/telegram-web-app.js"></script> -->
+		<script>
+			function trsAddress(address) {
+				let addr = TonConnectSDK.toUserFriendlyAddress(address)
+				sessionStorage.setItem('userAddress', addr)
+				$('#walletAddress').text(sliceAddress(addr, 4, 4))
+				return addr
+			}
+			async function loadData() {
+				await showLoading()
+				await getIndexInfo()
+				reloadText()
+				loadFooterText()
+				hideLoading()
+			}
+			if (token) {
+				loadData()
+			}
+			let assetPopup = document.getElementById('assetPopup')
+			let assetModal = document.getElementById('assetModal')
+			let setPopup = document.getElementById('setPopup')
+			let setModal = document.getElementById('setModal')
+			let selects = document.querySelectorAll('#setModal .flex')
+			let refresh = document.getElementById('refresh')
+
+			document.querySelectorAll('.dot').forEach(item => {
+				var randomColor = 'rgb(' +
+					(Math.floor(Math.random() * 256)) + ',' +
+					(Math.floor(Math.random() * 256)) + ',' +
+					(Math.floor(Math.random() * 256)) + ')';
+				item.style.backgroundColor = randomColor;
+			})
+			selects.forEach(function(item) {
+				item.onclick = function() {
+					selects.forEach(function(item_) {
+						item_.classList.remove('selected');
+					})
+					item.classList.add('selected')
+				}
+			})
+			refresh.addEventListener('click', function() {
+				this.classList.add('rotate-animation');
+
+				// 动画完成后移除类，以便下次点击时重新触发
+				this.addEventListener('animationend', function() {
+					this.classList.remove('rotate-animation');
+				});
+			});
+
+
+
+
+			function toRefresh() {
+
+			}
+
+			function showPopup() {
+				assetPopup.style.display = 'flex'
+				assetModal.style.animation = "slideDown 0.4s forwards"; // 应用下滑动画  
+			};
+
+			function showSet() {
+				setPopup.style.display = 'flex'
+				setModal.style.animation = "slideDown 0.4s forwards"; // 应用下滑动画  
+			}
+
+			function reloadText() {
+				if (baseLang == 'EN') {
+					$('#dealText1').html('transaction')
+					$('#dealText2').html('from')
+					$('#dealText3').html('to')
+					$('#dealText4').html('exchange')
+					$('#dealText5').html('advanced setting')
+					$('#dealText6').html('drift')
+					$('#dealText7').html(
+						'If the unfavorable price change exceeds this percentage, your transaction will be cancelled.')
+					$('#dealText8').html('save')
+					$('#dealText9').html('Select assets')
+				} else {
+					$('#dealText1').html('交易')
+					$('#dealText2').html('从')
+					$('#dealText3').html('至')
+					$('#dealText4').html('兑换')
+					$('#dealText5').html('高级设置')
+					$('#dealText6').html('滑移')
+					$('#dealText7').html('如果价格不利变化超过该百分比，您的交易将会撤销。')
+					$('#dealText8').html('保存')
+					$('#dealText9').html('选择资产')
+				}
+			}
+			// 点击模态框外部时，也关闭它  
+			window.onclick = function(event) {
+				if (event.target == popup) {
+					popup.style.display = "none";
+				} else if (event.target == morePopup) {
+					moreModal.style.animation = "toRightAnimate 0.4s forwards"; // 应用上滑动画
+					// moreModal.classList.remove('active')
+					setTimeout(() => {
+						morePopup.style.display = "none";
+					}, 200)
+				} else if (event.target == assetPopup) {
+					assetModal.style.animation = "slideUp 0.4s forwards"; // 应用上滑动画  
+					setTimeout(function() {
+						assetPopup.style.display = "none";
+					}, 40); // 动画完成后隐藏模态框 
+				} else if (event.target == setPopup) {
+					setModal.style.animation = "slideUp 0.4s forwards"; // 应用上滑动画  
+					setTimeout(function() {
+						setPopup.style.display = "none";
+					}, 40); // 动画完成后隐藏模态框 
+				}
+			}
+			// Init TWA
+			Telegram.WebApp.ready();
+
+			// Event occurs whenever theme settings are changed in the user's Telegram app (including switching to night mode).
+			Telegram.WebApp.onEvent('themeChanged', function() {
+				document.documentElement.className = Telegram.WebApp.colorScheme;
+			});
+
+
+			function setViewportData() {
+				var sizeEl = document.getElementById('viewport-params-size');
+				sizeEl.innerText = 'width: ' + window.innerWidth + ' x ' +
+					'height: ' + Telegram.WebApp.viewportStableHeight;
+
+				var expandEl = document.querySelector('#viewport-params-expand');
+				expandEl.innerText = 'Is Expanded: ' + (Telegram.WebApp.isExpanded ? 'true' : 'false');
+			}
+
+			Telegram.WebApp.setHeaderColor('secondary_bg_color');
+
+			setViewportData();
+			Telegram.WebApp.onEvent('viewportChanged', setViewportData);
+
+			Telegram.WebApp.onEvent('themeChanged', function() {
+				document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
+			});
+		</script>
+
+		<!-- Eruda is console for mobile browsers -->
+		<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+		<script>
+			eruda.init();
+		</script>
+	</body>
+</html>

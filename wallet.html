@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>babydogeswap</title>
+		<link rel="stylesheet" href="./css/common.css" />
+		<link rel="shortcut icon" href="favicon.ico">
+		<style>
+			body {
+				padding-bottom: 90px;
+				padding-top: 64px;
+				font-size: 13px;
+			}
+
+			.fs-20 {
+				font-size: 20px;
+
+			}
+
+			.mb-41 {
+				margin-bottom: 41px;
+			}
+
+			.walletWrap {
+				width: 100%;
+				height: 65px;
+				background: rgba(255, 255, 255, 0.03);
+				border: 0.5px solid #343434;
+				border-radius: 20px;
+				padding: 0 20px;
+				font-size: 13px;
+			}
+
+			.walletWrap .logo {
+				width: 32px;
+				height: 32px;
+				margin-right: 14px;
+				border-radius: 16px;
+			}
+
+			.walletWrap .amount {
+				font-size: 18px;
+				margin-right: 14px;
+			}
+
+			.walletWrap .right {
+				width: 8.5px;
+				height: 8.5px;
+			}
+
+			.mb-15 {
+				margin-bottom: 15px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<main>
+			<div class="topNav  flex-bw">
+				<span class="bold fs-20 twaName"></span>
+				<div class="flex">
+					<span id="setLang"></span>
+					<div class="flex notBind" id="ton-connect"></div>
+					<!-- <div class="flex bind">0D9...4646</div> -->
+					<img class="menu" onclick="showMore()" src="./images/menu.png" alt="">
+				</div>
+			</div>
+			<div class="fs-20 mb-41" id="walletText1"></div>
+			<a class="flex-bw walletWrap mb-15" href="usdt.html">
+				<div class="flex">
+					<img class="logo" src="images/usdt.png" alt="" />
+					<span>USDT</span>
+				</div>
+				<div class="flex">
+					<span class="amount" id="credit1">0</span>
+					<img class="right" src="images/right.png" alt="" />
+				</div>
+			</a>
+			<a class="flex-bw walletWrap mb-15" href="tokenA.html">
+				<div class="flex">
+					<img class="logo" src="images/doge.png" alt="" />
+					<span>babydoge</span>
+				</div>
+				<div class="flex">
+					<span class="amount" id="credit2">0</span>
+					<img class="right" src="images/right.png" alt="" />
+				</div>
+			</a>
+			<a class="flex-bw walletWrap mb-15" href="tokenB.html">
+				<div class="flex">
+					<img class="logo" src="images/bds.png" alt="" />
+					<span>BDS</span>
+				</div>
+				<div class="flex">
+					<span class="amount" id="credit3">0</span>
+					<img class="right" src="images/right.png" alt="" />
+				</div>
+			</a>
+			<!-- 更多菜单 -->
+			<div class="popup rightPopup" id="morePopup">
+				<div class="moreModal flex1" id="moreModal">
+					<span class="bold twaName"></span>
+					<div class="walletBtn flex">
+						<div class="flex">
+							<span id="moreText1"></span>
+							<span id="walletAddress"></span>
+						</div>
+						<img src="./images/copy.png" onclick="copy()" alt="">
+					</div>
+					<a class="flex-bw" href="index.html">
+						<span id="moreText2"></span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="wallet.html">
+						<span id="moreText3"></span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="ranking.html">
+						<span id="moreText4"></span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="invite.html">
+						<span id="moreText5"></span>
+						<img src="./images/right.png" alt="">
+					</a>
+				</div>
+			</div>
+			<!-- 加载弹窗 -->
+			<div id="loadingModal" class="loadingModal">
+				<div class="modal-content">
+					<p id="loadText"></p>
+					<img src="images/loading.png" alt="" />
+				</div>
+			</div>
+			<!-- 提示弹窗 -->
+			<div id="toastModal" class="toastModal">
+				<div class="modal-content">
+					<p id="toastMsg"></p>
+				</div>
+			</div>
+		</main>
+		<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.16.0/js/md5.js"></script>
+		<script src="./js/http.js"></script>
+		<script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+		<!-- <script src="https://telegram.org/js/telegram-web-app.js"></script> -->
+		<script>
+			function trsAddress(address) {
+				let addr = TonConnectSDK.toUserFriendlyAddress(address)
+				sessionStorage.setItem('userAddress', addr)
+				$('#walletAddress').text(sliceAddress(addr, 4, 4))
+				return addr
+			}
+
+			function getAsset() {
+				apiHttp($, "/api/contract/user/index").then(res => {
+					if (res.code == 1) {
+						$('#credit1').text(res.data.credit1)
+						$('#credit2').text(res.data.credit2)
+						$('#credit3').text(res.data.credit3)
+					}
+				})
+			}
+
+			async function loadData() {
+				await showLoading()
+				await getIndexInfo()
+				await getAsset()
+				reloadText()
+				loadFooterText()
+				hideLoading()
+			}
+			if (token) {
+				loadData()
+			}
+
+			function reloadText() {
+				if (baseLang == 'EN') {
+					$('#walletText1').html('my wallet')
+				} else {
+					$('#walletText1').html('我的钱包')
+				}
+			}
+		</script>
+
+		<!-- Eruda is console for mobile browsers -->
+		<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+		<script>
+			eruda.init();
+		</script>
+	</body>
+</html>

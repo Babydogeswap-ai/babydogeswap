@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>babydogeswap</title>
+		<link rel="stylesheet" href="./css/common.css" />
+		<link rel="shortcut icon" href="favicon.ico">
+		<style>
+			body {
+				padding: 0;
+				padding-top: 64px;
+				font-size: 13px;
+				min-height: 100vh;
+				box-sizing: border-box;
+
+			}
+
+			main {
+				min-height: 100vh;
+				box-sizing: border-box;
+				/* background: #252525; */
+			}
+
+			.inviteBg {
+				width: 100%;
+				padding: 13px 25px 43px;
+				font-size: 20px;
+			}
+
+			.inviteBg .flex {
+				font-size: 13px;
+			}
+
+			.inviteBg .dot {
+				width: 4px;
+				height: 4px;
+				background: #ec502c;
+				border-radius: 2px;
+				margin-right: 7px;
+			}
+
+			.inviteBg .mainColor {
+				margin-left: 2px;
+			}
+
+			.inviteWrap {
+				width: 100%;
+				min-height: calc(100vh - 76px);
+				background: #252525;
+				border-radius: 40px 40px 0 0;
+				padding: 17px 0;
+				align-items: center;
+			}
+
+			.inviteWrap .title {
+				align-self: flex-start;
+				padding-left: 23px;
+				margin-bottom: 27px;
+				font-size: 15px;
+			}
+
+			#inviteWrap {
+				width: 100%;
+			}
+
+			.empty {
+				justify-content: center;
+			}
+
+			.teamList {
+				width: 100%;
+				font-size: 12px;
+				padding: 0 27px;
+				margin-bottom: 22px;
+				background: #252525;
+			}
+
+			.teamList span:first-child {
+				flex: 5;
+			}
+
+			.teamList span:last-child {
+				flex: 1;
+			}
+
+			.green {
+				color: #2ED936;
+			}
+
+			.yellow {
+				color: #D39707;
+			}
+
+			.fs-20 {
+				font-size: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<main>
+			<div class="topNav  flex-bw">
+				<span class="bold fs-20 twaName"></span>
+				<div class="flex">
+					<span id="setLang"></span>
+					<div class="flex notBind" id="ton-connect"></div>
+					<!-- <div class="flex bind">0D9...4646</div> -->
+					<img class="menu" onclick="showMore()" src="./images/menu.png" alt="">
+				</div>
+			</div>
+			<div class="inviteBg flex-bw">
+				<div class="fs-27" id="teamText1"></div>
+				<div class="flex">
+					<div class="dot"></div>
+					<span id="teamText5">团队总人数：</span>
+					<span class="mainColor" id="teamCount">0</span>
+				</div>
+			</div>
+			<div class="inviteWrap flex1">
+				<div class="title" id="teamText2"></div>
+				<div class="flex teamList">
+					<span id="teamText3"></span>
+					<span id="teamText4"></span>
+				</div>
+				<div id="inviteWrap">
+
+				</div>
+			</div>
+			<!-- 更多菜单 -->
+			<div class="popup rightPopup" id="morePopup">
+				<div class="moreModal flex1" id="moreModal">
+					<span class="bold twaName"></span>
+					<div class="walletBtn flex">
+						<div class="flex">
+							<span id="moreText1"></span>
+							<span id="walletAddress"></span>
+						</div>
+						<img src="./images/copy.png" onclick="copy()" alt="">
+					</div>
+					<a class="flex-bw" href="index.html">
+						<span id="moreText2"></span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="wallet.html">
+						<span id="moreText3"></span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="ranking.html">
+						<span id="moreText4"></span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="invite.html">
+						<span id="moreText5"></span>
+						<img src="./images/right.png" alt="">
+					</a>
+				</div>
+			</div>
+			<!-- 加载弹窗 -->
+			<div id="loadingModal" class="loadingModal">
+				<div class="modal-content">
+					<p id="loadText"></p>
+					<img src="images/loading.png" alt="" />
+				</div>
+			</div>
+			<!-- 提示弹窗 -->
+			<div id="toastModal" class="toastModal">
+				<div class="modal-content">
+					<p id="toastMsg"></p>
+				</div>
+			</div>
+		</main>
+		<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.16.0/js/md5.js"></script>
+		<script src="./js/http.js"></script>
+		<script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+		<!-- <script src="https://telegram.org/js/telegram-web-app.js"></script> -->
+		<script>
+			function trsAddress(address) {
+				let addr = TonConnectSDK.toUserFriendlyAddress(address)
+				sessionStorage.setItem('userAddress', addr)
+				$('#walletAddress').text(sliceAddress(addr, 4, 4))
+				return addr
+			}
+
+			function getTeamList() {
+				apiHttp($, "/api/contract/user/getTeamList").then(res => {
+					if (res.code == 1) {
+						$('#teamCount').text(res.data.count)
+						let list = res.data.list
+						let inviteWrap = document.getElementById('inviteWrap')
+						let inviteItem = ''
+						if (!list.length) {
+							inviteItem = `<div class="empty flex">
+								${baseLang=='EN'?'No records available at the moment':'暂无记录'}
+							</div>`
+							inviteWrap.innerHTML = inviteItem
+						} else {
+							list.forEach(item => {
+								inviteItem += `<div class="flex teamList">
+							<span>${sliceAddress(item.address.startsWith('0:')?TonConnectSDK.toUserFriendlyAddress(item.address, true):item.address)}</span>
+							<span class="${item.level==1?'green':'yellow'}">${item.level==1?baseLang=='EN'?'Direct push':'直推':baseLang=='EN'?'Inter push':'间推'}</span>
+						</div>`
+							})
+							inviteWrap.innerHTML = inviteItem
+						}
+					}
+				})
+			}
+
+			async function loadData() {
+				await showLoading()
+				await getIndexInfo()
+				await getTeamList()
+				reloadText()
+				loadFooterText()
+				hideLoading()
+			}
+			if (token) {
+				loadData()
+			}
+
+			function reloadText() {
+				if (baseLang == 'EN') {
+					$('#teamText1').html('my team')
+					$('#teamText2').html('Invite data')
+					$('#teamText3').html('address')
+					$('#teamText4').html('relationship')
+					$('#teamText5').html('Total number of team: ')
+				} else {
+					$('#teamText1').html('我的团队')
+					$('#teamText2').html('邀请数据')
+					$('#teamText3').html('地址')
+					$('#teamText4').html('关系')
+					$('#teamText5').html('团队总人数：')
+				}
+			}
+		</script>
+
+		<!-- Eruda is console for mobile browsers -->
+		<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+		<script>
+			eruda.init();
+		</script>
+	</body>
+</html>

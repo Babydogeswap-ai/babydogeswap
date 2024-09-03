@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>babydogeswap</title>
+		<link rel="stylesheet" href="./css/common.css" />
+		<link rel="shortcut icon" href="favicon.ico">
+		<style>
+			body {
+				padding-bottom: 90px;
+				padding-top: 44px;
+			}
+
+
+			.fs-20 {
+				font-size: 20px;
+			}
+
+			.dealTitle {
+				margin-bottom: 25px;
+				padding-top: 20px;
+			}
+
+			.dealTitle .mainColor {
+				font-size: 12px;
+			}
+
+			.destroyWrap {
+				width: 100%;
+				height: 94.5px;
+				background: rgba(255, 255, 255, 0.03);
+				border: 0.5px solid #343434;
+				border-radius: 20px;
+				padding: 24px 20px;
+				margin-bottom: 20px;
+				font-size: 18px
+			}
+
+			.destroyWrap .grey {
+				font-size: 12px;
+				color: #888;
+				margin-bottom: 15px;
+			}
+
+			input {
+				width: 100%;
+				height: 41px;
+				background: rgba(255, 255, 255, 0.03);
+				border: 0.5px solid #343434;
+				border-radius: 20px;
+				padding: 0 20px;
+				color: #fff;
+				outline: none;
+				margin-bottom: 16px;
+			}
+
+			.amountsWrap {
+				font-size: 12px;
+				padding: 0 5px;
+			}
+
+			.mb-8 {
+				margin-bottom: 8px;
+			}
+
+			.button {
+				margin: 35px 0 51px;
+			}
+
+			.flexCenter {
+				width: 100%;
+				height: 184px;
+				background: rgba(255, 255, 255, 0.03);
+				border: 0.5px solid #343434;
+				border-radius: 20px;
+				flex-wrap: wrap;
+				padding: 24px 18px;
+			}
+
+			.flexCenter .flex1 {
+				width: 50%;
+			}
+
+			.flexCenter .grey {
+				font-size: 12px;
+				color: #888;
+				margin-bottom: 10px;
+			}
+
+			.mb-15 {
+				margin-bottom: 15px;
+			}
+
+			.dealWrap {
+				width: 100%;
+				height: 150.5px;
+				background: rgba(255, 255, 255, 0.03);
+				border: 0.5px solid #343434;
+				border-radius: 20px;
+			}
+
+			.mb-34 {
+				margin-bottom: 34px;
+			}
+
+			.mb-137 {
+				margin-bottom: 137px;
+			}
+
+			.dealWrap .flex-bw {
+				padding: 0 20px;
+			}
+
+			.dealWrap .logo {
+				width: 31.5px;
+				height: 32px;
+				margin-right: 10px;
+			}
+
+			.dealWrap .token {
+				height: 58px;
+			}
+
+			.amountWrap {
+				width: 100%;
+				height: 91.5px;
+				background: rgba(255, 255, 255, 0.03);
+				border: 0.5px solid #343434;
+				border-radius: 20px;
+				padding: 0 22px;
+				font-size: 24px;
+			}
+
+			.amountWrap .fs-14 {
+				font-size: 14px;
+				color: #888;
+			}
+
+			.select {
+				width: 8px;
+				height: 6.5px;
+				margin-left: 7.5px;
+			}
+
+			.exchangeImg {
+				width: 42px;
+				height: 40px;
+				margin: 23px 0 29px;
+			}
+
+
+			.modal {
+				position: relative;
+				width: 17.125rem;
+				height: 480px;
+				background: #161616;
+				border-radius: 20px;
+				padding: 38px 31px 57px;
+				align-items: center;
+				font-size: 15px;
+				animation-name: zoom;
+				animation-duration: .3s;
+				transition: all .3s;
+			}
+
+			.modal .close {
+				position: absolute;
+				top: 11px;
+				right: 11px;
+				width: 17.5px;
+				height: 17.5px;
+			}
+
+			.modal .fs-12 {
+				color: #888;
+			}
+
+			.modal .qrcode {
+				width: 100%;
+				height: 191.5px;
+				background: #ffffff;
+				border-radius: 20px;
+				margin: 17px 0 38px;
+			}
+
+			.mt-20 {
+				margin-top: 20px;
+			}
+
+			.mb-20 {
+				margin-bottom: 20px;
+			}
+
+			.modal .flex1 {
+				align-items: center;
+				justify-tracks: space-between;
+			}
+
+			.modal .flex {
+				font-size: 10px;
+				font-weight: bold;
+			}
+
+			.modal .flex span {
+				text-align: center;
+				font-size: 10px;
+				font-weight: bold;
+			}
+
+			.modal .flex img {
+				width: 36.5px;
+				height: 36px;
+				margin-bottom: 8px;
+
+			}
+
+			.modal1 {
+				width: 274px;
+				height: 312.5px;
+				background: #161616;
+				border-radius: 20px;
+				font-size: 15px;
+				align-items: center;
+				justify-content: center;
+				nimation-name: zoom;
+				animation-duration: .3s;
+				transition: .2s;
+			}
+
+			.modal1 .flex {
+				font-size: 12px;
+				color: #888;
+				margin: 20px 0 12px;
+			}
+
+			.modal1 .flex .amount {
+				font-size: 30px;
+				color: #EC502C;
+				font-weight: bold;
+			}
+
+			.modal1 img {
+				width: 87px;
+				height: 96.5px;
+			}
+
+			.modal1 .btn {
+				width: 211px;
+				height: 39.5px;
+				background: #ec502c;
+				border-radius: 20px;
+				justify-content: center;
+				margin-top: 23px;
+				color: #fff;
+				font-size: 12px;
+			}
+
+			.rightPopup {
+				justify-content: flex-end;
+			}
+
+			.moreModal {
+				width: 194px;
+				height: 100vh;
+				background: #161616;
+				border-radius: 20px 20px 20px 0px;
+				align-items: center;
+				animation-name: toLeftAnimate;
+				animation-duration: .3s;
+				padding: 20px 11px;
+
+			}
+
+			.moreModal .bold {
+				font-size: 20px;
+			}
+
+			.moreModal .walletBtn {
+				width: 171.5px;
+				height: 34px;
+				background: #ec502c;
+				border-radius: 17px;
+				margin: 18px 0 21px;
+				justify-content: center;
+				gap: 9px;
+				font-size: 12px;
+			}
+
+			.moreModal .walletBtn img {
+				width: 9px;
+				height: 9px;
+			}
+
+			.moreModal .flex-bw {
+				width: 100%;
+				font-size: 13px;
+				margin-bottom: 20px;
+			}
+
+			.moreModal .flex-bw img {
+				width: 13px;
+				height: 13px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<main>
+			<div class="topNav  flex-bw">
+				<span class="bold fs-20 twaName"></span>
+				<div class="flex">
+					<span id="setLang"></span>
+					<div class="flex notBind" id="ton-connect"></div>
+					<!-- <div class="flex bind">0D9...4646</div> -->
+					<img class="menu" onclick="showMore()" src="./images/menu.png" alt="">
+				</div>
+			</div>
+			<div class="dealTitle flex-bw">
+				<span class="fs-20" id="destoryText1">销毁</span>
+				<span class="mainColor" id="destoryText13">进行中</span>
+			</div>
+			<div class="flex-bw destroyWrap">
+				<div class="flex1">
+					<span class="grey" id="destoryText2">累计销毁（USDT）</span>
+					<span id="count">0</span>
+				</div>
+				<div class="flex1">
+					<span class="grey" id="destoryText3">您的当前销毁（USDT）</span>
+					<span id="userPrice">0</span>
+				</div>
+			</div>
+			<input type="" id="myInput" placeholder="请输入数量" value="" oninput="updateOtherValue()" />
+			<div class="flex1 amountsWrap">
+				<div class="flex-bw mb-8">
+					<span>USDT/babydoge</span>
+					<div class="flex">
+						<span id="inputNum"></span>
+						<span>/</span>
+						<span id="tokenA"></span>
+					</div>
+				</div>
+				<div class="flex-bw">
+					<div class="flex">
+						<span id="destoryText4">倍数：</span>
+						<span id="bei">0</span>
+						<span id="destoryText5">倍</span>
+					</div>
+					<div class="flex">
+						<span id="destoryText6">算力值：</span>
+						<span id="power">0</span>
+						<span>USDT</span>
+					</div>
+				</div>
+			</div>
+			<div class="btn button" id="destoryText7" onclick="createBurn()">销毁</div>
+			<div class="flex flexCenter">
+				<div class="flex1 mb-15">
+					<span class="grey" id="destoryText8">平台已产BDS</span>
+					<span id="dayCount">0</span>
+				</div>
+				<div class="flex1 mb-15">
+					<span class="grey" id="destoryText9">BDS流通量</span>
+					<span id="tokenB">0</span>
+				</div>
+				<div class="flex1">
+					<span class="grey" id="destoryText10">总算力(USDT)</span>
+					<span id="countCredit4">0</span>
+				</div>
+				<a class="flex1" href="power.html">
+					<span class="grey" id="destoryText11">我的算力(USDT)</span>
+					<span id="userCredit4">0</span>
+				</a>
+			</div>
+			<div class="joinus">
+				<div class="fs-20" id="joinus">加入我们的社区</div>
+				<div class="ourCommunity flex" id="ourCommunity">
+				</div>
+				<div class="flex-bw" id="footerAbout">
+					<div class="flex1">
+						<span id="joinText1">探索</span>
+						<ul id="dt1"></ul>
+					</div>
+					<div class="flex1">
+						<span id="joinText2">用户</span>
+						<ul id="dt2"></ul>
+					</div>
+					<div class="flex1">
+						<span id="joinText3">开发</span>
+						<ul id="dt3"></ul>
+					</div>
+				</div>
+			</div>
+			<div class="tabbar flex">
+				<a class="flex1" href="deal.html">
+					<img src="./images/tab1.png" alt="">
+					<span id="tabbarText1">交易</span>
+				</a>
+				<a class="flex1" href="pool.html">
+					<img src="./images/tab2.png" alt="">
+					<span id="tabbarText2">池子</span>
+				</a>
+				<a class="flex1" href="destroy.html">
+					<img src="./images/tabs3.png" alt="">
+					<span class="mainColor" id="tabbarText3">销毁</span>
+				</a>
+				<a class="flex1" href="bridge.html">
+					<img src="./images/tab4.png" alt="">
+					<span id="tabbarText4">跨链桥</span>
+				</a>
+				<a class="flex1" href="communityToken.html">
+					<img src="./images/tab5.png" alt="">
+					<span id="tabbarText5">社区代币</span>
+				</a>
+			</div>
+			
+			<!-- 更多菜单 -->
+			<div class="popup rightPopup" id="morePopup">
+				<div class="moreModal flex1" id="moreModal">
+					<span class="bold twaName"></span>
+					<div class="walletBtn flex">
+						<div class="flex">
+							<span id="moreText1">钱包地址:</span>
+							<span id="walletAddress"></span>
+						</div>
+						<img src="./images/copy.png" onclick="copy()" alt="">
+					</div>
+					<a class="flex-bw" href="index.html">
+						<span id="moreText2">首页</span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="wallet.html">
+						<span id="moreText3">我的资产</span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="ranking.html">
+						<span id="moreText4">排行榜</span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="invite.html">
+						<span id="moreText5">邀请</span>
+						<img src="./images/right.png" alt="">
+					</a>
+				</div>
+			</div>
+			<!-- 加载弹窗 -->
+			<div id="loadingModal" class="loadingModal">
+				<div class="modal-content">
+					<p id="loadText"></p>
+					<img src="images/loading.png" alt="" />
+				</div>
+			</div>
+			<!-- 提示弹窗 -->
+			<div id="toastModal" class="toastModal">
+				<div class="modal-content">
+					<p id="toastMsg"></p>
+				</div>
+			</div>
+		</main>
+		<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.16.0/js/md5.js"></script>
+		<script src="./js/http.js"></script>
+		<script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+		<!-- <script src="https://telegram.org/js/telegram-web-app.js"></script> -->
+		<script>
+			let percent = 0
+			let linePrice = 1
+			let bei = 1
+			let myInput = document.getElementById('myInput')
+
+			function trsAddress(address) {
+				let addr = TonConnectSDK.toUserFriendlyAddress(address)
+				sessionStorage.setItem('userAddress', addr)
+				$('#walletAddress').text(sliceAddress(addr, 4, 4))
+				return addr
+			}
+
+			function createBurn() {
+				if (Number(myInput.value) <= 0) {
+					if(baseLang == 'EN'){
+						return toast('Please enter the extraction quantity')
+					}else{
+						return toast('请输入提取数量')
+					}
+				}
+				apiHttp($, "/api/contract/burn/createBurn", {
+					price: myInput.value,
+				}).then(res => {
+					if (res.code == 1) {
+						toast(res.msg)
+						myInput.value = ''
+						getBurn()
+					}
+				})
+			}
+
+			function getBurn() {
+				apiHttp($, "/api/contract/burn/index").then(res => {
+					if (res.code == 1) {
+						let inputValue = myInput.value || 0;
+						$('#count').text(res.data.count)
+						$('#userPrice').text(res.data.userPrice)
+						$('#bei').text(res.data.bei)
+						$('#dayCount').text(res.data.dayCount)
+						$('#tokenB').text(res.data.dayCount)
+						$('#countCredit4').text(res.data.countCredit4)
+						$('#userCredit4').text(res.data.userCredit4)
+						$('#inputNum').text(0)
+						$('#tokenA').text(0)
+						$('#power').text(0)
+						percent = res.data.percent
+						linePrice = res.data.linePrice
+						bei = res.data.bei
+					}
+				})
+			}
+
+			function updateOtherValue() {
+				let inputValue = myInput.value || 0;
+				document.getElementById('inputNum').textContent = inputValue * percent / 100;
+				document.getElementById('tokenA').innerHTML = (inputValue * (1 - percent / 100) / linePrice).toFixed(2)
+				document.getElementById('power').innerHTML = inputValue * bei
+			}
+
+			async function loadData() {
+				await showLoading()
+				await getIndexInfo()
+				await getBurn()
+				reloadText()
+				loadFooterText()
+				hideLoading()
+			}
+			if (token) {
+				loadData()
+			}
+
+			function reloadText() {
+				if (baseLang == 'EN') {
+					$('#destoryText1').html('Destruction')
+					$('#destoryText2').html('Accumulated Destruction (USDT)')
+					$('#destoryText3').html('current destruction (USDT)')
+					$('#destoryText4').html('multiple:')
+					$('#destoryText5').html('times')
+					$('#destoryText6').html('Computing power value:')
+					$('#destoryText7').html('Destruction')
+					$('#destoryText8').html('The platform has produced BDS')
+					$('#destoryText9').html('BDS circulation volume')
+					$('#destoryText10').html('Total Strength (USDT)')
+					$('#destoryText11').html('My computing power (USDT)')
+					$('#destoryText13').html('in progress')
+					myInput.placeholder = "Please enter the quantity";
+				} else {
+					$('#destoryText1').html('销毁')
+					$('#destoryText2').html('累计销毁（USDT）')
+					$('#destoryText3').html('您的当前销毁（USDT）')
+					$('#destoryText4').html('倍数：')
+					$('#destoryText5').html('倍')
+					$('#destoryText6').html('算力值：')
+					$('#destoryText7').html('销毁')
+					$('#destoryText8').html('平台已产BDS')
+					$('#destoryText9').html('BDS流通量')
+					$('#destoryText10').html('总算力(USDT)')
+					$('#destoryText11').html('我的算力(USDT)')
+					$('#destoryText13').html('进行中')
+					myInput.placeholder = "请输入数量";
+
+				}
+			}
+			// Init TWA
+			Telegram.WebApp.ready();
+
+			// Event occurs whenever theme settings are changed in the user's Telegram app (including switching to night mode).
+			Telegram.WebApp.onEvent('themeChanged', function() {
+				document.documentElement.className = Telegram.WebApp.colorScheme;
+			});
+
+			// Function to call showPopup API
+			function showPopup() {
+				Telegram.WebApp.showPopup({
+					title: 'Title',
+					message: 'Some message',
+					buttons: [{
+							id: 'link',
+							type: 'default',
+							text: 'Open ton.org'
+						},
+						{
+							type: 'cancel'
+						},
+					]
+				}, function(btn) {
+					if (btn === 'link') {
+						Telegram.WebApp.openLink('https://ton.org/');
+					}
+				});
+			};
+
+			// Function to toggle main TWA button
+			function toggleMainButton() {
+				if (Telegram.WebApp.MainButton.isVisible) {
+					Telegram.WebApp.MainButton.hide();
+				} else {
+					Telegram.WebApp.MainButton.show();
+				}
+			};
+
+
+
+			function setViewportData() {
+				var sizeEl = document.getElementById('viewport-params-size');
+				sizeEl.innerText = 'width: ' + window.innerWidth + ' x ' +
+					'height: ' + Telegram.WebApp.viewportStableHeight;
+
+				var expandEl = document.querySelector('#viewport-params-expand');
+				expandEl.innerText = 'Is Expanded: ' + (Telegram.WebApp.isExpanded ? 'true' : 'false');
+			}
+
+			Telegram.WebApp.setHeaderColor('secondary_bg_color');
+
+			setViewportData();
+			Telegram.WebApp.onEvent('viewportChanged', setViewportData);
+
+			Telegram.WebApp.onEvent('themeChanged', function() {
+				document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
+			});
+		</script>
+
+		<!-- Eruda is console for mobile browsers -->
+		<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+		<script>
+			eruda.init();
+		</script>
+	</body>
+</html>

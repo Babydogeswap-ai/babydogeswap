@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>babydogeswap</title>
+		<link rel="stylesheet" href="./css/common.css" />
+		<link rel="shortcut icon" href="favicon.ico">
+		<style>
+			body {
+				padding-bottom: 90px;
+				padding-top: 64px;
+				font-size: 13px;
+			}
+
+			.fs-20 {
+				font-size: 20px;
+			}
+
+			.mb-14 {
+				margin-bottom: 14px;
+			}
+
+			.inputWrap {
+				width: 100%;
+				height: 41px;
+				background: rgba(255, 255, 255, 0.03);
+				border: 0.5px solid #343434;
+				border-radius: 20px;
+				padding: 0 20px;
+				gap: 12px;
+			}
+
+			.inputWrap .line {
+				width: 0.5px;
+				height: 21px;
+				opacity: 0.1;
+				border: 0.5px solid #8e8e8e;
+				border-radius: 1px;
+			}
+
+			.inputWrap img {
+				width: 8px;
+				height: 7px;
+			}
+
+			input {
+				background: #1d1d1d;
+				border: none;
+				outline: none;
+				color: #fff;
+				/* padding: 0 20px; */
+			}
+
+			.mb-42 {
+				margin-bottom: 42px;
+			}
+
+			.mb-17 {
+				margin-bottom: 17px;
+			}
+
+			.empty {
+				justify-content: center;
+			}
+
+			.mb-8 {
+				margin-bottom: 8px;
+			}
+
+			.button {
+				margin: 35px 0 51px;
+			}
+
+			.mb-15 {
+				margin-bottom: 15px;
+			}
+
+
+			.mt-20 {
+				margin-top: 20px;
+			}
+
+			.mb-20 {
+				margin-bottom: 20px;
+			}
+
+			.mb-25 {
+				margin-bottom: 25px;
+			}
+
+			.btn {
+				/* margin-top: 182px;
+				margin-bottom: 129px; */
+				margin-top: 82px;
+				margin-bottom: 29px;
+			}
+
+			.ruleWrap {
+				width: 100%;
+				padding: 15px;
+				border-radius: 10px;
+				border: 1px solid #343434;
+			}
+
+			#title {
+				font-size: 17px;
+			}
+
+			#usdtPrice {
+				margin-right: 5px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<main>
+			<div class="topNav  flex-bw">
+				<span class="bold fs-20 twaName"></span>
+				<div class="flex">
+					<span id="setLang"></span>
+					<div class="flex notBind" id="ton-connect"></div>
+					<!-- <div class="flex bind">0D9...4646</div> -->
+					<img class="menu" onclick="showMore()" src="./images/menu.png" alt="">
+				</div>
+			</div>
+			<div class="fs-20 mb-25" id="commuText1">兑换</div>
+			<div class="mb-14" id="commuText2">资金</div>
+			<div class="flex inputWrap mb-42">
+				<span>USDT</span>
+				<div class="line"></div>
+				<input class="" type="number" placeholder="请输入数量" id="price" oninput="updateValue()">
+			</div>
+			<div class="mb-14" id="commuText3">资金</div>
+			<div class="flex inputWrap mb-14">
+				<span>babydoge</span>
+				<img src="./images/down.png" alt="">
+				<div class="line"></div>
+				<input type="text" id="tokenA" disabled>
+			</div>
+			<div class="mb-20 flex">
+				<span>1USDT=</span>
+				<span id="usdtPrice">0</span>
+				<span>babydoge</span>
+			</div>
+			<div class="btn" id="commuText4" onclick="toExchange()">兑换</div>
+			<div class="ruleWrap">
+				<div id="title"></div>
+				<div id="cont"></div>
+			</div>
+			<div class="joinus">
+				<div class="fs-20" id="joinus">加入我们的社区</div>
+				<div class="ourCommunity flex" id="ourCommunity">
+				</div>
+				<div class="flex-bw" id="footerAbout">
+					<div class="flex1">
+						<span id="joinText1">探索</span>
+						<ul id="dt1"></ul>
+					</div>
+					<div class="flex1">
+						<span id="joinText2">用户</span>
+						<ul id="dt2"></ul>
+					</div>
+					<div class="flex1">
+						<span id="joinText3">开发</span>
+						<ul id="dt3"></ul>
+					</div>
+				</div>
+			</div>
+			<div class="tabbar flex">
+				<a class="flex1" href="deal.html">
+					<img src="./images/tab1.png" alt="">
+					<span id="tabbarText1">交易</span>
+				</a>
+				<a class="flex1" href="pool.html">
+					<img src="./images/tab2.png" alt="">
+					<span id="tabbarText2">池子</span>
+				</a>
+				<a class="flex1" href="destroy.html">
+					<img src="./images/tab3.png" alt="">
+					<span id="tabbarText3">销毁</span>
+				</a>
+				<a class="flex1" href="bridge.html">
+					<img src="./images/tab4.png" alt="">
+					<span id="tabbarText4">跨链桥</span>
+				</a>
+				<a class="flex1" href="communityToken.html">
+					<img src="./images/tabs5.png" alt="">
+					<span class="mainColor" id="tabbarText5">社区代币</span>
+				</a>
+			</div>
+			<!-- 更多菜单 -->
+			<div class="popup rightPopup" id="morePopup">
+				<div class="moreModal flex1" id="moreModal">
+					<span class="bold twaName"></span>
+					<div class="walletBtn flex">
+						<div class="flex">
+							<span id="moreText1">钱包地址:</span>
+							<span id="walletAddress"></span>
+						</div>
+						<img src="./images/copy.png" onclick="copy()" alt="">
+					</div>
+					<a class="flex-bw" href="index.html">
+						<span id="moreText2">首页</span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="wallet.html">
+						<span id="moreText3">我的资产</span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="ranking.html">
+						<span id="moreText4">排行榜</span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="invite.html">
+						<span id="moreText5">邀请</span>
+						<img src="./images/right.png" alt="">
+					</a>
+				</div>
+			</div>
+			<!-- 加载弹窗 -->
+			<div id="loadingModal" class="loadingModal">
+				<div class="modal-content">
+					<p id="loadText"></p>
+					<img src="images/loading.png" alt="" />
+				</div>
+			</div>
+			<!-- 提示弹窗 -->
+			<div id="toastModal" class="toastModal">
+				<div class="modal-content">
+					<p id="toastMsg"></p>
+				</div>
+			</div>
+		</main>
+		<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.16.0/js/md5.js"></script>
+		<script src="./js/http.js"></script>
+		<script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+		<!-- <script src="https://telegram.org/js/telegram-web-app.js"></script> -->
+
+		<script>
+			let input = document.getElementById('price')
+			let usdtPrice = 1
+
+			function trsAddress(address) {
+				let addr = TonConnectSDK.toUserFriendlyAddress(address)
+				sessionStorage.setItem('userAddress', addr)
+				$('#walletAddress').text(sliceAddress(addr, 4, 4))
+				return addr
+			}
+			async function loadData() {
+				await showLoading()
+				await getIndexInfo()
+				await getRule()
+				await getInfo()
+				reloadText()
+				loadFooterText()
+				hideLoading()
+			}
+
+			function getInfo() {
+				apiHttp($, "/api/contract/exchange/index").then(res => {
+					if (res.code == 1) {
+						usdtPrice = res.data.usdtPrice
+						$('#usdtPrice').text(usdtPrice)
+					}
+				})
+			}
+
+			function updateValue() {
+				document.getElementById('tokenA').value = (input.value * usdtPrice).toFixed(6)
+			}
+
+			function toExchange() {
+
+				if (Number(input.value) <= 0) {
+					if (baseLang == 'EN') {
+						return toast('Please enter the quantity')
+					} else {
+						return toast('请输入数量')
+					}
+				}
+				apiHttp($, "/api/contract/exchange/exchange", {
+					price: input.value
+				}).then(res => {
+					if (res.code == 1) {
+						toast(res.msg)
+						input.value = ''
+						document.getElementById('tokenA').value = ''
+					}
+				})
+			}
+
+			function getRule() {
+				apiHttp($, "/api/contract/auth/getRule").then(res => {
+					if (res.code == 1) {
+						$('#title').html(res.data.title)
+						$('#cont').html(res.data.info)
+					}
+				})
+			}
+			if (token) {
+				loadData()
+			}
+
+			function reloadText() {
+				if (baseLang == 'EN') {
+					$('#commuText1').html('exchange')
+					$('#commuText2').html('fund')
+					$('#commuText3').html('fund')
+					$('#commuText4').html('exchange')
+					input.placeholder = "Please enter the quantity";
+				} else {
+					$('#commuText1').html('兑换')
+					$('#commuText2').html('资金')
+					$('#commuText3').html('资金')
+					$('#commuText4').html('兑换')
+					input.placeholder = "请输入数量";
+				}
+			}
+		</script>
+
+		<!-- Eruda is console for mobile browsers -->
+		<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+		<script>
+			eruda.init();
+		</script>
+	</body>
+</html>

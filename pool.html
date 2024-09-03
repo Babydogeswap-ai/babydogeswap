@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>babydogeswap</title>
+		<link rel="stylesheet" href="./css/common.css" />
+		<link rel="shortcut icon" href="favicon.ico">
+
+
+
+		<style>
+			body {
+				padding: 0;
+
+				padding-top: 57px;
+			}
+
+			.pagetop {
+				padding: 0 22px;
+			}
+
+			.fs-20 {
+				font-size: 20px;
+			}
+
+			.fs-12 {
+				font-size: 12px;
+			}
+
+			.bold {
+				font-weight: bold;
+			}
+
+			.fs-24 {
+				font-size: 24px;
+				margin-bottom: 15px;
+			}
+
+			.btn {
+				margin-top: 20px;
+				margin-bottom: 16px;
+			}
+
+			.btn img {
+				width: 15px;
+				height: 15px;
+			}
+
+			.btn .left {
+				margin-left: -8px;
+				margin-right: 9px;
+			}
+
+			.searchWrap {
+				width: 100%;
+				height: 73.5px;
+				background: #262626;
+				border-radius: 20px;
+				font-size: 12px;
+				color: #888;
+			}
+
+			.searchWrap .flex {
+				flex: 1;
+				padding: 0 15px;
+			}
+
+			.searchWrap .border img {
+				width: 15.5px;
+				height: 15.5px;
+				margin-right: 13px;
+			}
+
+			.searchWrap .border {
+				border-bottom: 1px solid #333;
+			}
+
+			.searchWrap .flex:last-child img {
+				width: 14px;
+				height: 14px;
+				margin-right: 8px;
+			}
+
+			.searchWrap .flex:last-child span {
+				margin-right: 15px;
+			}
+
+			.searchWrap .flex:last-child .line {
+				width: 0.5px;
+				height: 13.5px;
+				background: #333;
+				border-radius: 0.5px;
+				margin-right: 8px;
+			}
+
+			.ml-12 {
+				margin-left: 12px;
+			}
+
+			.poolWrap {
+				padding: 17px 22px;
+				width: 100%;
+				min-height: calc(100vh - 200px);
+				background: #262626;
+				border-radius: 20px 20px 0 0;
+				margin-top: 17px;
+				padding-bottom: 90px;
+			}
+
+			.poolWrap .title {
+				margin: 27px 0;
+			}
+
+			.poolWrap .title span {
+				flex: 2;
+			}
+
+			.poolWrap .title span:last-child {
+				text-align: center;
+				flex: 1.5;
+			}
+
+			.poolWrap .title span:nth-child(2) {
+				padding-left: 30px;
+			}
+
+			.poolWrap .record {
+				margin-bottom: 23px;
+			}
+
+			.poolWrap .record>.flex {
+				flex: 2;
+				font-size: 12px;
+			}
+
+			.poolWrap .record>.flex img {
+				position: relative;
+				width: 25.5px;
+				height: 25.5px;
+				z-index: 2;
+			}
+
+			.poolWrap .record>.flex .usdt {
+				left: -10px;
+				z-index: 1;
+			}
+
+			.poolWrap .record>.flex:last-child {
+				flex: 1.5;
+				justify-content: center;
+
+			}
+
+			.poolWrap .record>.flex:nth-child(2) {
+				padding-left: 30px;
+			}
+
+			.poolWrap .record>.flex:first-child span {
+				margin-left: -4px;
+
+			}
+
+			.poolWrap .record>.flex:last-child .flex {
+				justify-content: center;
+				width: 67.5px;
+				height: 24.5px;
+				background: #1b3f25;
+				border-radius: 12.5px;
+				color: #52C074;
+				font-size: 12px;
+			}
+
+			.fs-15 {
+				font-size: 15px;
+			}
+
+			.modal {
+				position: relative;
+				width: 17.125rem;
+				height: 480px;
+				background: #161616;
+				border-radius: 20px;
+				padding: 38px 31px 57px;
+				align-items: center;
+				font-size: 15px;
+				animation-name: zoom;
+				animation-duration: .3s;
+				transition: all .3s;
+			}
+
+			.modal .close {
+				position: absolute;
+				top: 11px;
+				right: 11px;
+				width: 17.5px;
+				height: 17.5px;
+			}
+
+			.modal .fs-12 {
+				color: #888;
+			}
+
+			.modal .qrcode {
+				width: 100%;
+				height: 191.5px;
+				background: #ffffff;
+				border-radius: 20px;
+				margin: 17px 0 38px;
+			}
+
+			.mt-20 {
+				margin-top: 20px;
+			}
+
+			.mb-20 {
+				margin-bottom: 20px;
+			}
+
+			.modal .flex1 {
+				align-items: center;
+				justify-tracks: space-between;
+
+			}
+
+			.modal .flex {
+				font-size: 10px;
+				font-weight: bold;
+				flex-wrap: wrap;
+			}
+
+			.modal .flex span {
+				text-align: center;
+				font-size: 10px;
+				font-weight: bold;
+			}
+
+			.modal .flex img {
+				width: 36.5px;
+				height: 36px;
+				margin-bottom: 8px;
+
+			}
+
+			.modal1 {
+				width: 274px;
+				height: 312.5px;
+				background: #161616;
+				border-radius: 20px;
+				font-size: 15px;
+				align-items: center;
+				justify-content: center;
+				nimation-name: zoom;
+				animation-duration: .3s;
+				transition: .2s;
+			}
+
+			.modal1 .flex {
+				font-size: 12px;
+				color: #888;
+				margin: 20px 0 12px;
+			}
+
+			.modal1 .flex .amount {
+				font-size: 30px;
+				color: #EC502C;
+				font-weight: bold;
+			}
+
+			.modal1 img {
+				width: 87px;
+				height: 96.5px;
+			}
+
+			.modal1 .btn {
+				width: 211px;
+				height: 39.5px;
+				background: #ec502c;
+				border-radius: 20px;
+				justify-content: center;
+				margin-top: 23px;
+				color: #fff;
+				font-size: 12px;
+			}
+
+			@keyframes toLeftAnimate {
+				from {
+					transform: translateX(194px);
+				}
+
+				to {
+					transform: translateX(0);
+				}
+			}
+
+			@keyframes toRightAnimate {
+				from {
+					transform: translateX(0);
+				}
+
+				to {
+					transform: translateX(194px);
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<main>
+			<div class="topNav flex-bw">
+				<span class="bold fs-20 twaName"></span>
+				<div class="flex">
+					<span id="setLang"></span>
+					<div class="flex notBind" id="ton-connect"></div>
+					<!-- <div class="flex notBind" id="bindWallet">未绑定</div> -->
+					<!-- <div class="flex bind">0D9...4646</div> -->
+					<img class="menu" onclick="showMore()" src="./images/menu.png" alt="">
+				</div>
+			</div>
+			<div class="pagetop">
+				<div class="fs-20" id="poolText1">池子</div>
+				<div class="btn">
+					<img src="./images/right1.png" alt="">
+					<img class="left" src="./images/right1.png" alt="">
+					<span id="poolText2">提高流动性</span>
+				</div>
+				<div class="searchWrap flex1">
+					<div class="flex border">
+						<img src="./images/ser.png" alt="">
+						<span  id="poolText3">搜索</span>
+					</div>
+					<div class="flex">
+						<span  id="poolText4">筛选器</span>
+						<img src="./images/ton.png" alt="">
+						<img src="./images/scale.png" alt="">
+						<img src="./images/usdt1.png" alt="">
+						<div class="line"></div>
+						<img src="./images/img1.png" alt="">
+						<img class="ml-12" src="./images/img2.png" alt="">
+					</div>
+				</div>
+			</div>
+			<div class="poolWrap">
+				<div class="mainColor bold">
+					<span id="poolText5">池子</span>
+					<span class="fs-12">（854）</span>
+				</div>
+				<div class="flex title">
+					<span id="poolText6">名称</span>
+					<span id="poolText7">价格</span>
+					<span id="poolText8">涨幅</span>
+				</div>
+				<div class="flex record">
+					<div class="flex">
+						<img src="./images/eth.png" alt="">
+						<img class="usdt" src="./images/usdt.png" alt="">
+						<span id="">USDT/ETH</span>
+					</div>
+					<div class="flex">
+						<span id="">$</span>
+						<span class="fs-15">302.12</span>
+						<span id="">M</span>
+					</div>
+					<div class="flex">
+						<div class="flex">
+							+56.3%
+						</div>
+					</div>
+				</div>
+				<div class="flex record">
+					<div class="flex">
+						<img src="./images/eth.png" alt="">
+						<img class="usdt" src="./images/usdt.png" alt="">
+						<span id="">USDT/ETH</span>
+					</div>
+					<div class="flex">
+						<span id="">$</span>
+						<span class="fs-15">302.12</span>
+						<span id="">M</span>
+					</div>
+					<div class="flex">
+						<div class="flex">
+							+56.3%
+						</div>
+					</div>
+				</div>
+				<div class="flex record">
+					<div class="flex">
+						<img src="./images/eth.png" alt="">
+						<img class="usdt" src="./images/usdt.png" alt="">
+						<span id="">USDT/ETH</span>
+					</div>
+					<div class="flex">
+						<span id="">$</span>
+						<span class="fs-15">302.12</span>
+						<span id="">M</span>
+					</div>
+					<div class="flex">
+						<div class="flex">
+							+56.3%
+						</div>
+					</div>
+				</div>
+				<div class="joinus">
+					<div class="fs-20" id="joinus">加入我们的社区</div>
+					<div class="ourCommunity flex" id="ourCommunity">
+					</div>
+					<div class="flex-bw" id="footerAbout">
+						<div class="flex1">
+							<span id="joinText1">探索</span>
+							<ul id="dt1"></ul>
+						</div>
+						<div class="flex1">
+							<span id="joinText2">用户</span>
+							<ul id="dt2"></ul>
+						</div>
+						<div class="flex1">
+							<span id="joinText3">开发</span>
+							<ul id="dt3"></ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="tabbar flex">
+				<a class="flex1" href="deal.html">
+					<img src="./images/tab1.png" alt="">
+					<span id="tabbarText1">交易</span>
+				</a>
+				<a class="flex1" href="pool.html">
+					<img src="./images/tabs2.png" alt="">
+					<span class="mainColor" id="tabbarText2">池子</span>
+				</a>
+				<a class="flex1" href="destroy.html">
+					<img src="./images/tab3.png" alt="">
+					<span id="tabbarText3">销毁</span>
+				</a>
+				<a class="flex1" href="bridge.html">
+					<img src="./images/tab4.png" alt="">
+					<span id="tabbarText4">跨链桥</span>
+				</a>
+				<a class="flex1" href="communityToken.html">
+					<img src="./images/tab5.png" alt="">
+					<span id="tabbarText5">社区代币</span>
+				</a>
+			</div>
+			
+			<!-- 更多菜单 -->
+			<div class="popup rightPopup" id="morePopup">
+				<div class="moreModal flex1" id="moreModal">
+					<span class="bold twaName"></span>
+					<div class="walletBtn flex">
+						<div class="flex">
+							<span id="moreText1">钱包地址:</span>
+							<span id="walletAddress"></span>
+						</div>
+						<img src="./images/copy.png" onclick="copy()" alt="">
+					</div>
+					<a class="flex-bw" href="index.html">
+						<span id="moreText2">首页</span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="wallet.html">
+						<span id="moreText3">我的资产</span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="ranking.html">
+						<span id="moreText4">排行榜</span>
+						<img src="./images/right.png" alt="">
+					</a>
+					<a class="flex-bw" href="invite.html">
+						<span id="moreText5">邀请</span>
+						<img src="./images/right.png" alt="">
+					</a>
+				</div>
+			</div>
+			<!-- 加载弹窗 -->
+			<div id="loadingModal" class="loadingModal">
+				<div class="modal-content">
+					<p id="loadText"></p>
+					<img src="images/loading.png" alt="" />
+				</div>
+			</div>
+			<!-- 提示弹窗 -->
+			<div id="toastModal" class="toastModal">
+				<div class="modal-content">
+					<p id="toastMsg"></p>
+				</div>
+			</div>
+		</main>
+		<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.16.0/js/md5.js"></script>
+		<script src="./js/http.js"></script>
+		<script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+		<!-- <script src="https://telegram.org/js/telegram-web-app.js"></script> -->
+		<script>
+			function trsAddress(address) {
+				let addr = TonConnectSDK.toUserFriendlyAddress(address)
+				sessionStorage.setItem('userAddress', addr)
+				$('#walletAddress').text(sliceAddress(addr, 4, 4))
+				return addr
+			}
+			async function loadData() {
+				await showLoading()
+				await getIndexInfo()
+				reloadText()
+				loadFooterText()
+				hideLoading()
+			}
+			if (token) {
+				loadData()
+			}
+			
+			function reloadText() {
+				if (baseLang == 'EN') {
+					$('#poolText1').html('pond')
+					$('#poolText2').html('Improve liquidity')
+					$('#poolText3').html('search for')
+					$('#poolText4').html('filter')
+					$('#poolText5').html('pond')
+					$('#poolText6').html('name')
+					$('#poolText7').html('price')
+					$('#poolText8').html('Increase in price')
+				} else {
+					$('#poolText1').html('池子')
+					$('#poolText2').html('提高流动性')
+					$('#poolText3').html('搜索')
+					$('#poolText4').html('筛选器')
+					$('#poolText5').html('池子')
+					$('#poolText6').html('名称')
+					$('#poolText7').html('价格')
+					$('#poolText8').html('涨幅')
+				}
+			}
+		</script>
+
+		<!-- Eruda is console for mobile browsers -->
+		<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+		<script>
+			eruda.init();
+		</script>
+	</body>
+</html>
