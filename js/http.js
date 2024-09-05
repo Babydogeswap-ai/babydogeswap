@@ -1,6 +1,6 @@
 const baseUrl = 'https://ton.babysdogeswap.net'
-let token = sessionStorage.getItem('token') || ''
-let baseLang = sessionStorage.getItem('lang') || 'CN'
+let token = localStorage.getItem('token') || ''
+let baseLang = localStorage.getItem('lang') || 'CN'
 $('#setLang').text(baseLang)
 const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
 	manifestUrl: 'https://Babydogeswap-ai.github.io/babydogeswap/tonconnect-manifest.json',
@@ -190,7 +190,7 @@ function toast(msg) {
 }
 
 async function copy() {
-	let addr = sessionStorage.getItem('userAddress')
+	let addr = localStorage.getItem('userAddress')
 	// navigator.clipboard.writeText(addr)
 	copyTextToClipboard(addr)
 	if (baseLang == 'EN') {
@@ -235,7 +235,7 @@ window.addEventListener('ton-connect-connection-completed', (event) => {
 	let inviteCode = extractInviteCode(location.href)
 	console.log('inviteCode.........', inviteCode);
 	let address = event.detail.wallet_address
-	sessionStorage.setItem('address', address)
+	localStorage.setItem('address', address)
 	let addr = trsAddress(address)
 
 	if (!token) {
@@ -247,19 +247,10 @@ window.addEventListener('ton-connect-connection-completed', (event) => {
 	}
 });
 
-// window.addEventListener('beforeunload', (event) => {
-// 	console.log('22222222222222');
-// 	if (event.clientX > document.body.clientWidth && event.clientY < 0 || event.altKey) {
-// 		tonConnectUI.disconnect();
-// 		console.log("你关闭了浏览器");
-// 	} else {
-// 		console.log("你正在刷新页面");
-// 	}
 
-// });
 window.addEventListener('ton-connect-disconnection', (event) => {
 	console.log('断开连接！！！！！！！', event.detail.wallet_address);
-	sessionStorage.clear()
+	localStorage.clear()
 	token = ''
 });
 
@@ -276,8 +267,8 @@ function login(address, inviteCode) {
 		if (res.code == 1) {
 			token = res.data.userInfo.token
 			updateToken()
-			sessionStorage.setItem('token', res.data.userInfo.token)
-			sessionStorage.setItem('userInfo', JSON.stringify(res.data.userInfo))
+			localStorage.setItem('token', res.data.userInfo.token)
+			localStorage.setItem('userInfo', JSON.stringify(res.data.userInfo))
 			setTimeout(() => {
 				loadData()
 			}, 100)
@@ -286,10 +277,10 @@ function login(address, inviteCode) {
 }
 
 function getIndexInfo() {
-	let data = sessionStorage.getItem('twaInfo')
+	let data = localStorage.getItem('twaInfo')
 	apiHttp($, "/api/contract/index/index").then(res => {
 		if (res.code == 1) {
-			sessionStorage.setItem('twaInfo', JSON.stringify(res.data))
+			localStorage.setItem('twaInfo', JSON.stringify(res.data))
 			setFooter(res.data)
 		}
 	})
@@ -313,7 +304,7 @@ if (setLang) {
 			baseLang = 'CN'
 		}
 		$('#setLang').text(baseLang)
-		sessionStorage.setItem('lang', baseLang)
+		localStorage.setItem('lang', baseLang)
 		location.reload()
 	})
 }

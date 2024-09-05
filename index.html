@@ -418,7 +418,7 @@
 		<script>
 			function trsAddress(address) {
 				let addr = TonConnectSDK.toUserFriendlyAddress(address)
-				sessionStorage.setItem('userAddress', addr)
+				localStorage.setItem('userAddress', addr)
 				console.log('addr1111111', TonConnectSDK.toUserFriendlyAddress(address));
 				console.log('addr222222', TonConnectSDK.toUserFriendlyAddress(address, true));
 				// $('#walletAddress').innerHTML = sliceAddress(addr, 4, 4)

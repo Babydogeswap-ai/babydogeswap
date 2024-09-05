@@ -143,7 +143,7 @@
 			let priceIpt = document.getElementById('price')
 			function trsAddress(address) {
 				let addr = TonConnectSDK.toUserFriendlyAddress(address)
-				sessionStorage.setItem('userAddress', addr)
+				localStorage.setItem('userAddress', addr)
 				return addr
 			}
 

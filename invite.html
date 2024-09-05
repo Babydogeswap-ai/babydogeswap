@@ -259,13 +259,13 @@
 		<script>
 			let invitePopup = document.getElementById('invitePopup')
 			let inviteModal = document.getElementById('inviteModal')
-			let githubUrl = sessionStorage.getItem('githubUrl') || ''
-			let tmeUrl = sessionStorage.getItem('tmeUrl') || ''
+			let githubUrl = localStorage.getItem('githubUrl') || ''
+			let tmeUrl = localStorage.getItem('tmeUrl') || ''
 		
 
 			function trsAddress(address) {
 				let addr = TonConnectSDK.toUserFriendlyAddress(address)
-				sessionStorage.setItem('userAddress', addr)
+				localStorage.setItem('userAddress', addr)
 				$('#walletAddress').text(sliceAddress(addr, 4, 4))
 				return addr
 			}
@@ -276,9 +276,9 @@
 						githubUrl = res.data.githubUrl
 						tmeUrl = res.data.tmeUrl
 						$('#link1').text(githubUrl)
-						sessionStorage.setItem('githubUrl', githubUrl)
+						localStorage.setItem('githubUrl', githubUrl)
 						$('#link').text(tmeUrl)
-						sessionStorage.setItem('tmeUrl', tmeUrl)
+						localStorage.setItem('tmeUrl', tmeUrl)
 					}
 				})
 			}
