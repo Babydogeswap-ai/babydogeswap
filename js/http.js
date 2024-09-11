@@ -235,10 +235,13 @@ window.addEventListener('ton-connect-connection-completed', (event) => {
 	let inviteCode = extractInviteCode(location.href)
 	console.log('inviteCode.........', inviteCode);
 	let address = event.detail.wallet_address
+	let preAddress = localStorage.getItem('address')
+	console.log(11111111111, localStorage.getItem('address'));
+	console.log(222222222222, address);
 	localStorage.setItem('address', address)
 	let addr = trsAddress(address)
 
-	if (!token) {
+	if (!token || preAddress != address) {
 		setTimeout(() => {
 			login(addr, inviteCode)
 		}, 500)
