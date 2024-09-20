@@ -49,7 +49,7 @@ function initTokens() {
 
 $('#setLang').text(baseLang)
 const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-	manifestUrl: 'https://Babydogeswap-ai.github.io/babydogeswap/tonconnect-manifest.json',
+	manifestUrl: 'https://babydogeswap-ai.github.io/babydogeswap/tonconnect-manifest.json',
 	buttonRootId: 'ton-connect'
 });
 getTonProof()
