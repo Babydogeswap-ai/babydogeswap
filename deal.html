@@ -48,9 +48,10 @@
 			}
 
 			.dealWrap .logo {
-				width: 31.5px;
+				width: 32px;
 				height: 32px;
 				margin-right: 10px;
+				border-radius: 16px;
 			}
 
 			.dealWrap .token {
@@ -70,6 +71,15 @@
 			.amountWrap .fs-14 {
 				font-size: 14px;
 				color: #888;
+			}
+
+			.amountWrap input {
+				width: 160px;
+				font-size: 24px;
+				background: transparent;
+				color: #fff;
+				outline: none;
+				border: none;
 			}
 
 			.select {
@@ -250,40 +260,17 @@
 				height: 13px;
 			}
 
-			.assetPopup,
-			.setPopup {
-				align-items: flex-end;
-			}
 
-			.assetModal {
-				width: 100%;
-				height: 452px;
-				background: #161616;
-				border-radius: 20px;
-				padding: 19px 30px;
-				font-size: 14px;
-				border-top: 1px solid #343434;
-			}
-
-			.assetModal .title {
-				font-size: 15px;
-				text-align: center;
-				margin-bottom: 38px;
-			}
-
-			.assetModal .flex-bw {
-				margin-bottom: 20px;
-			}
-
-			.assetModal .flex-bw .dot {
-				width: 4px;
-				height: 4px;
-				/* background-color: #276AF6; */
-				margin-right: 5px;
-			}
 
 			.listWrap {
 				overflow-y: scroll;
+			}
+
+			.listWrap img {
+				width: 30px;
+				height: 30px;
+				border-radius: 50%;
+				margin-right: 10px;
 			}
 
 			.setModal {
@@ -397,34 +384,35 @@
 				<div class="dealWrap">
 					<div class="flex-bw token">
 						<span id="dealText2">从</span>
-						<div class="flex" onclick="showPopup()">
-							<img class="logo" src="./images/eth.png" alt="">
-							<span id="">TON</span>
+						<div class="flex" onclick="showPopup(1)">
+							<img class="logo" id="logo1" src="./images/bds.png" alt="">
+							<span id="token1">BDS</span>
 							<img class="select" src="./images/down.png" alt="">
 						</div>
 					</div>
 					<div class="amountWrap flex-bw">
-						<span id="">0</span>
-						<span class="fs-14">≈$0</span>
+						<!-- <input id="">0</span> -->
+						<input type="number" id="myInput" oninput="updateOtherValue()" placeholder="0">
+						<span class="fs-14" id="doller1">≈$0</span>
 					</div>
 				</div>
-				<img class="exchangeImg" src="./images/exchange.png" alt="" />
+				<img class="exchangeImg" src="./images/exchange.png" onclick="reverseToken()" alt="" />
 				<div class="dealWrap">
 					<div class="flex-bw token">
 						<span id="dealText3">至</span>
-						<div class="flex" onclick="showPopup()">
-							<img class="logo" src="./images/usdt.png" alt="">
-							<span id="">Lon</span>
+						<div class="flex" onclick="showPopup(2)">
+							<img class="logo" id="logo2" src="./images/usdt.png" alt="">
+							<span id="token2">USDT</span>
 							<img class="select" src="./images/down.png" alt="">
 						</div>
 					</div>
 					<div class="amountWrap flex-bw">
-						<span id="">0</span>
-						<span class="fs-14">≈0</span>
+						<span id="getPrice">0</span>
+						<span class="fs-14" id="doller2">≈0</span>
 					</div>
 				</div>
-				<span class="computed">1Ton≈1Lon</span>
-				<div class="btn" id="dealText4">兑换</div>
+				<span class="computed" id="computed">1BDS≈1USDT</span>
+				<div class="btn" id="dealText4" onclick="toDedust()">兑换</div>
 			</div>
 			<!-- 设置弹窗 -->
 			<div class="popup setPopup" id="setPopup">
@@ -444,42 +432,7 @@
 			<div class="popup assetPopup" id="assetPopup">
 				<div class="flex1 assetModal" id="assetModal">
 					<span class="title" id="dealText9"></span>
-					<div class="listWrap">
-						<div class="flex-bw">
-							<div class="flex">
-								<div class="dot"></div>
-								<span>ETH</span>
-							</div>
-							<span>$0</span>
-						</div>
-						<div class="flex-bw">
-							<div class="flex">
-								<div class="dot"></div>
-								<span>ETH</span>
-							</div>
-							<span>$0</span>
-						</div>
-						<div class="flex-bw">
-							<div class="flex">
-								<div class="dot"></div>
-								<span>ETH</span>
-							</div>
-							<span>$0</span>
-						</div>
-						<div class="flex-bw">
-							<div class="flex">
-								<div class="dot"></div>
-								<span>ETH</span>
-							</div>
-							<span>$0</span>
-						</div>
-						<div class="flex-bw">
-							<div class="flex">
-								<div class="dot"></div>
-								<span>ETH</span>
-							</div>
-							<span>$0</span>
-						</div>
+					<div class="listWrap" id="listWrap">
 					</div>
 				</div>
 			</div>
@@ -524,7 +477,7 @@
 					<span id="tabbarText5">社区代币</span>
 				</a>
 			</div>
-			
+
 			<!-- 更多菜单 -->
 			<div class="popup rightPopup" id="morePopup">
 				<div class="moreModal flex1" id="moreModal">
@@ -552,6 +505,10 @@
 						<span id="moreText5">邀请</span>
 						<img src="./images/right.png" alt="">
 					</a>
+					<a class="flex-bw" href="setPassword.html">
+						<span id="moreText6">支付密码</span>
+						<img src="./images/right.png" alt="">
+					</a>
 				</div>
 			</div>
 			<!-- 加载弹窗 -->
@@ -571,22 +528,31 @@
 		<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 		<script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.16.0/js/md5.js"></script>
-		<script src="./js/http.js"></script>
 		<script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
-		<!-- <script src="https://telegram.org/js/telegram-web-app.js"></script> -->
+		<script src="./js/http.js"></script>
+		<script src="js/convertPrice.js"></script>
 		<script>
-			function trsAddress(address) {
-				let addr = TonConnectSDK.toUserFriendlyAddress(address)
-				localStorage.setItem('userAddress', addr)
-				$('#walletAddress').text(sliceAddress(addr, 4, 4))
-				return addr
-			}
+			let type = 1
+			let desc = 1
+			let fromToken = {}
+			let toToken = {}
+			let tradePrice = {}
+			let bdsPrice = JSON.parse(localStorage.getItem('twaInfo')).bdsPrice
+			let usdtPrice = JSON.parse(localStorage.getItem('twaInfo')).usdtPrice
+
+			$('#computed').html(`1BDS≈${bdsPrice}USDT`)
 			async function loadData() {
 				await showLoading()
 				await getIndexInfo()
 				reloadText()
 				loadFooterText()
+				tradePriceInfo()
 				hideLoading()
+				setTimeout(() => {
+					fromToken = tokensList && tokensList[0]
+					toToken = tokensList && tokensList[1]
+					console.log(44, fromToken, toToken);
+				}, 1000)
 			}
 			if (token) {
 				loadData()
@@ -597,14 +563,10 @@
 			let setModal = document.getElementById('setModal')
 			let selects = document.querySelectorAll('#setModal .flex')
 			let refresh = document.getElementById('refresh')
+			let myInput = document.getElementById('myInput')
+			let listWrap = document.getElementById('listWrap')
 
-			document.querySelectorAll('.dot').forEach(item => {
-				var randomColor = 'rgb(' +
-					(Math.floor(Math.random() * 256)) + ',' +
-					(Math.floor(Math.random() * 256)) + ',' +
-					(Math.floor(Math.random() * 256)) + ')';
-				item.style.backgroundColor = randomColor;
-			})
+
 			selects.forEach(function(item) {
 				item.onclick = function() {
 					selects.forEach(function(item_) {
@@ -624,15 +586,27 @@
 
 
 
+			function reverseToken() {
+				desc == 1 ? desc = 2 : desc = 1
+				updateOtherValue()
+			}
 
+
+			
 			function toRefresh() {
 
 			}
 
-			function showPopup() {
+			function showPopup(i) {
+				type = i
+				renderTokens()
 				assetPopup.style.display = 'flex'
 				assetModal.style.animation = "slideDown 0.4s forwards"; // 应用下滑动画  
 			};
+
+			
+
+			
 
 			function showSet() {
 				setPopup.style.display = 'flex'
@@ -685,32 +659,7 @@
 					}, 40); // 动画完成后隐藏模态框 
 				}
 			}
-			// Init TWA
-			Telegram.WebApp.ready();
-
-			// Event occurs whenever theme settings are changed in the user's Telegram app (including switching to night mode).
-			Telegram.WebApp.onEvent('themeChanged', function() {
-				document.documentElement.className = Telegram.WebApp.colorScheme;
-			});
-
-
-			function setViewportData() {
-				var sizeEl = document.getElementById('viewport-params-size');
-				sizeEl.innerText = 'width: ' + window.innerWidth + ' x ' +
-					'height: ' + Telegram.WebApp.viewportStableHeight;
-
-				var expandEl = document.querySelector('#viewport-params-expand');
-				expandEl.innerText = 'Is Expanded: ' + (Telegram.WebApp.isExpanded ? 'true' : 'false');
-			}
-
-			Telegram.WebApp.setHeaderColor('secondary_bg_color');
-
-			setViewportData();
-			Telegram.WebApp.onEvent('viewportChanged', setViewportData);
-
-			Telegram.WebApp.onEvent('themeChanged', function() {
-				document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
-			});
+			
 		</script>
 
 		<!-- Eruda is console for mobile browsers -->

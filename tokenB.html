@@ -108,9 +108,9 @@
 			}
 
 			.recordWrap .flex .flex {
-				flex: 1.5;
-				padding-left: 10px;
-				justify-content: flex-start;
+				flex: 1;
+				/* padding-left: 10px; */
+				justify-content: center;
 			}
 
 			.recordWrap .flex .flex .flex1 {
@@ -320,6 +320,40 @@
 				width: 13px;
 				height: 13px;
 			}
+
+			.passwordModal {
+				z-index: 999;
+				width: 290px;
+				height: 248px;
+				padding: 20px 15px;
+				background: #161616;
+				border-radius: 20px;
+				align-items: center;
+				justify-content: center;
+				animation-name: zoom;
+				animation-duration: .3s;
+				transition: .2s;
+			}
+
+			.passwordModal .btn {
+				margin-top: 28px;
+			}
+
+			.passwordModal input {
+				margin-top: 18px;
+				width: 100%;
+				height: 41px;
+				background: rgba(255, 255, 255, 0.03);
+				border: 0.5px solid #343434;
+				border-radius: 20px;
+				outline: none;
+				color: #fff;
+				padding: 0 20px;
+			}
+
+			.passwordModal .mainColor {
+				margin-top: 20px;
+			}
 		</style>
 	</head>
 
@@ -370,10 +404,10 @@
 					<div class="tip" id="tokenBText7"></div>
 					<input type="number" id="input" placeholder="请输入提取数量">
 					<div class="fee flex">
-						<span  id="tokenBText8"></span>
+						<span id="tokenBText8"></span>
 						<span class="percent" id="percent">0%</span>
 					</div>
-					<div class="btn"  id="tokenBText9" onclick="toWithdraw()"></div>
+					<div class="btn" id="tokenBText9" onclick="toWithdraw()"></div>
 				</div>
 			</div>
 			<!-- 更多菜单 -->
@@ -403,6 +437,10 @@
 						<span id="moreText5"></span>
 						<img src="./images/right.png" alt="">
 					</a>
+					<a class="flex-bw" href="setPassword.html">
+						<span id="moreText6">支付密码</span>
+						<img src="./images/right.png" alt="">
+					</a>
 				</div>
 			</div>
 			<!-- 加载弹窗 -->
@@ -418,35 +456,54 @@
 					<p id="toastMsg"></p>
 				</div>
 			</div>
+			<!-- 密码弹窗 -->
+			<div id="passwordModal" class=" popup ">
+				<div class="passwordModal flex1">
+					<p id="transText7">请输入支付密码</p>
+					<input type="password" id="password" placeholder="请输入支付密码">
+					<div id="transText8" class="btn" onclick="onConfirm()">确认</div>
+					<a href="setPassword.html" id="setPsd" class="mainColor">设置密码</a>
+				</div>
+			</div>
 		</main>
 
 		<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 		<script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.16.0/js/md5.js"></script>
-		<script src="./js/http.js"></script>
 		<script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
-		<!-- <script src="https://telegram.org/js/telegram-web-app.js"></script> -->
+		<script src="./js/http.js"></script>
+
 		<script>
 			let withdrawPopup = document.getElementById('withdrawPopup')
 			let withdrawModal = document.getElementById('withdrawModal')
 			let input = document.getElementById('input')
 			let current = 0
+			let passwordModal = document.getElementById('passwordModal')
+			let password = document.getElementById('password')
 
-			function trsAddress(address) {
-				let addr = TonConnectSDK.toUserFriendlyAddress(address)
-				localStorage.setItem('userAddress', addr)
-				$('#walletAddress').text(sliceAddress(addr, 4, 4))
-				return addr
+			function toWithdraw(amount) {
+				let price = ''
+				if (amount) {
+					price = amount
+				} else {
+					price = input.value
+					if (Number(price) <= 0) {
+						return toast(baseLang == 'EN' ? 'Please enter the extraction quantity' : '请输入提取数量')
+					}
+				}
+				passwordModal.style.display = 'flex';
+
 			}
 
-			function toWithdraw() {
-				let price = input.value
-				if (Number(price) <= 0) {
-					return toast(baseLang=='EN'?'Please enter the extraction quantity':'请输入提取数量')
+			function onConfirm() {
+				if (!password.value) {
+					return toast(baseLang == 'EN' ? 'Please enter the payment password' : '请输入支付密码')
 				}
+				console.log(password.value);
 				apiHttp($, "/api/contract/withdraw/index", {
-					price: price,
-					credittype: 'credit3'
+					price: input.value,
+					credittype: 'credit3',
+					password: password.value
 				}).then(res => {
 					if (res.code == 1) {
 						toast(res.msg)
@@ -457,6 +514,8 @@
 							withdrawPopup.style.display = "none";
 						}, 200)
 						getAsset()
+						password.value = ''
+						passwordModal.style.display = 'none';
 						if (current == 0) {
 							getRebateList()
 						} else {
@@ -464,6 +523,7 @@
 						}
 					}
 				})
+
 			}
 
 			function showPopup() {
@@ -533,30 +593,30 @@
 
 						} else {
 							list.forEach(item => {
-								if (item.status == 2) {
-									recordItem += `<div class="flex">
-								<span>${baseLang=='EN'?'extract':'提取'}</span>
-								<span class="red">${item.price}</span>
+								// 	if (item.status == 2) {
+								// 		recordItem += `<div class="flex">
+								// 	<span>${baseLang=='EN'?'extract':'提取'} (${statusInfo[item.status]})</span>
+								// 	<span class="red">${Number(item.price).toFixed(2)}</span>
+								// 	<div class="flex">
+								// 		<div class="flex1">
+								// 			<span>${formatTimestamp(item.createtime,'date')}</span>
+								// 			<span>${formatTimestamp(item.createtime,'time')}</span>
+								// 		</div>
+								// 		<div class="btn" onclick="${toWithdraw(item.price)}">${baseLang=='EN'?'receive':'领取'}</div>
+								// 	</div>
+								// </div>`
+								// 	} else {
+								recordItem += `<div class="flex">
+								<span>${baseLang=='EN'?'extract':'提取'} (${statusInfo[item.status]})</span>
+								<span class="red">${Number(item.price).toFixed(2)}</span>
 								<div class="flex">
 									<div class="flex1">
 										<span>${formatTimestamp(item.createtime,'date')}</span>
 										<span>${formatTimestamp(item.createtime,'time')}</span>
 									</div>
-									<div class="btn" onclick="${toReceive()}">${baseLang=='EN'?'receive':'领取'}</div>
 								</div>
 							</div>`
-								} else {
-									recordItem += `<div class="flex">
-								<span>${baseLang=='EN'?'extract':'提取'}</span>
-								<span class="red">${item.price}</span>
-								<div class="flex">
-									<div class="flex1">
-										<span>${formatTimestamp(item.createtime,'date')}</span>
-										<span>${formatTimestamp(item.createtime,'time')}</span>
-									</div>
-								</div>
-							</div>`
-								}
+								// }
 							})
 							tab2.innerHTML = recordItem
 						}
@@ -576,9 +636,13 @@
 				loadData()
 			}
 
+			function toReceive() {
+
+			}
+
 			function reloadText() {
 				if (baseLang == 'EN') {
-					$('#tokenBText1').html('Withdrawable BDS')
+					$('#tokenBText1').html('extractable BDS')
 					$('#tokenBText2').html('extract')
 					$('#tokenBText3').html('Revenue records')
 					$('#tokenBText4').html('Extract Records')
@@ -587,9 +651,13 @@
 					$('#tokenBText7').html('Please enter the extraction quantity')
 					$('#tokenBText8').html('Service Charge:')
 					$('#tokenBText9').html('extract')
+					$('#transText7').html('Please enter the payment password')
+					$('#transText8').html('confirm')
+					$('#setPsd').html('Set Password')
 					input.placeholder = "Please enter the extraction quantity";
+					password.placeholder = "Please enter the payment password";
 				} else {
-					$('#tokenBText1').html('可提现BDS')
+					$('#tokenBText1').html('可提取BDS')
 					$('#tokenBText2').html('提取')
 					$('#tokenBText3').html('收益记录')
 					$('#tokenBText4').html('提取记录')
@@ -598,7 +666,11 @@
 					$('#tokenBText7').html('请输入提取数量')
 					$('#tokenBText8').html('手续费：')
 					$('#tokenBText9').html('提取')
+					$('#transText7').html('请输入支付密码')
+					$('#transText8').html('确认')
+					$('#setPsd').html('设置密码')
 					input.placeholder = "请输入提取数量";
+					password.placeholder = "请输入支付密码";
 				}
 				initTab()
 			}
@@ -650,33 +722,10 @@
 					setTimeout(() => {
 						withdrawPopup.style.display = "none";
 					}, 200)
+				}else if (event.target == passwordModal) {
+					passwordModal.style.display = "none";
 				}
 			}
-			// Init TWA
-			Telegram.WebApp.ready();
-
-			// Event occurs whenever theme settings are changed in the user's Telegram app (including switching to night mode).
-			Telegram.WebApp.onEvent('themeChanged', function() {
-				document.documentElement.className = Telegram.WebApp.colorScheme;
-			});
-
-			function setViewportData() {
-				var sizeEl = document.getElementById('viewport-params-size');
-				sizeEl.innerText = 'width: ' + window.innerWidth + ' x ' +
-					'height: ' + Telegram.WebApp.viewportStableHeight;
-
-				var expandEl = document.querySelector('#viewport-params-expand');
-				expandEl.innerText = 'Is Expanded: ' + (Telegram.WebApp.isExpanded ? 'true' : 'false');
-			}
-
-			Telegram.WebApp.setHeaderColor('secondary_bg_color');
-
-			setViewportData();
-			Telegram.WebApp.onEvent('viewportChanged', setViewportData);
-
-			Telegram.WebApp.onEvent('themeChanged', function() {
-				document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
-			});
 		</script>
 
 		<!-- Eruda is console for mobile browsers -->

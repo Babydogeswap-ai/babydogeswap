@@ -43,8 +43,9 @@
 			}
 
 			.rowWrap .flex-bw img {
-				width: 31.5px;
+				width: 32px;
 				height: 32px;
+				border-radius: 50%;
 			}
 
 			.flexCenter {
@@ -72,9 +73,10 @@
 			}
 
 			.dealWrap .logo {
-				width: 31.5px;
+				width: 32px;
 				height: 32px;
 				margin-right: 10px;
+				border-radius: 50%;
 			}
 
 			.dealWrap .token {
@@ -161,9 +163,10 @@
 			}
 
 			.modal .flex img {
-				width: 36.5px;
+				width: 36px;
 				height: 36px;
 				margin-bottom: 8px;
+				border-radius: 50%;
 
 			}
 
@@ -213,6 +216,22 @@
 				width: 13px;
 				height: 13px;
 			}
+
+			input {
+				width: 160px;
+				font-size: 24px;
+				background: transparent;
+				color: #fff;
+				outline: none;
+				border: none;
+			}
+
+			.listWrap img {
+				width: 30px;
+				height: 30px;
+				border-radius: 50%;
+				margin-right: 10px;
+			}
 		</style>
 	</head>
 
@@ -230,43 +249,44 @@
 			<div class="dealTitle fs-20" id="bridgeText1">桥</div>
 			<div class="flex-bw rowWrap">
 				<div class="flex-bw">
-					<span>TON</span>
-					<img src="images/eth.png" alt="">
+					<span id="token1">BDS</span>
+					<img id="logo1" src="images/bds.png" alt="">
 				</div>
-				<img src="images/enter.png" alt="">
+				<img src="images/enter.png" onclick="reverseToken()" alt="">
 				<div class="flex-bw">
-					<span>ETH</span>
-					<img src="images/usdt.png" alt="">
+					<span id="token2">USDT</span>
+					<img id="logo2" src="images/usdt.png" alt="">
 				</div>
 			</div>
 			<div class="flex1 flexCenter">
 				<div class="dealWrap mb-34">
 					<div class="flex-bw token">
 						<span id="bridgeText2">资产</span>
-						<div class="flex">
-							<img class="logo" src="./images/eth.png" alt="">
-							<span id="">ton</span>
+						<div class="flex" onclick="showPopup(1)">
+							<img class="logo" id="logo11" src="./images/bds.png" alt="">
+							<span id="token11">BDS</span>
 							<img class="select" src="./images/down.png" alt="">
 						</div>
 					</div>
 					<div class="amountWrap flex-bw">
-						<span id="">0</span>
+						<input type="number" id="myInput" oninput="updateOtherValue()" placeholder="0">
 					</div>
 				</div>
-				<div class="dealWrap mb-137">
+				<div class="dealWrap mb-34">
 					<div class="flex-bw token">
 						<span id="bridgeText3">你收到的</span>
-						<div class="flex">
-							<img class="logo" src="./images/eth.png" alt="">
-							<span id="">wton</span>
+						<div class="flex" onclick="showPopup(2)">
+							<img class="logo" id="logo22" src="./images/usdt.png" alt="">
+							<span id="token22">USDT</span>
 							<img class="select" src="./images/down.png" alt="">
 						</div>
 					</div>
 					<div class="amountWrap flex-bw">
-						<span id="">0</span>
+						<span id="getPrice">0</span>
 					</div>
 				</div>
 			</div>
+			<div class="btn mb-137" id="dealText4" onclick="toDedust()">兑换</div>
 			<div class="joinus">
 				<div class="fs-20" id="joinus">加入我们的社区</div>
 				<div class="ourCommunity flex" id="ourCommunity">
@@ -308,7 +328,14 @@
 					<span id="tabbarText5">社区代币</span>
 				</a>
 			</div>
-
+			<!-- 选择资产弹窗 -->
+			<div class="popup assetPopup" id="assetPopup">
+				<div class="flex1 assetModal" id="assetModal">
+					<span class="title" id="dealText9"></span>
+					<div class="listWrap" id="listWrap">
+					</div>
+				</div>
+			</div>
 			<!-- 更多菜单 -->
 			<div class="popup rightPopup" id="morePopup">
 				<div class="moreModal flex1" id="moreModal">
@@ -336,6 +363,10 @@
 						<span id="moreText5">邀请</span>
 						<img src="./images/right.png" alt="">
 					</a>
+					<a class="flex-bw" href="setPassword.html">
+						<span id="moreText6">支付密码</span>
+						<img src="./images/right.png" alt="">
+					</a>
 				</div>
 			</div>
 			<!-- 加载弹窗 -->
@@ -356,36 +387,63 @@
 		<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 		<script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.16.0/js/md5.js"></script>
-		<script src="./js/http.js"></script>
 		<script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+		<script src="./js/http.js"></script>
+		<script src="js/convertPrice.js"></script>
 		<!-- <script src="https://telegram.org/js/telegram-web-app.js"></script> -->
 		<script>
-			function trsAddress(address) {
-				let addr = TonConnectSDK.toUserFriendlyAddress(address)
-				localStorage.setItem('userAddress', addr)
-				$('#walletAddress').text(sliceAddress(addr, 4, 4))
-				return addr
-			}
+			let assetPopup = document.getElementById('assetPopup')
+			let assetModal = document.getElementById('assetModal')
+			let myInput = document.getElementById('myInput')
+			let listWrap = document.getElementById('listWrap')
+			let type = 1
+			let desc = 1
+			let fromToken = {}
+			let toToken = {}
+			let tradePrice = {}
+
 			async function loadData() {
 				await showLoading()
 				await getIndexInfo()
 				reloadText()
 				loadFooterText()
+				tradePriceInfo()
 				hideLoading()
+				setTimeout(() => {
+					fromToken = tokensList && tokensList[0]
+					toToken = tokensList && tokensList[1]
+					console.log(44, fromToken, toToken);
+				}, 1000)
 			}
 			if (token) {
 				loadData()
 			}
+
+			function reverseToken() {
+				desc == 1 ? desc = 2 : desc = 1
+				updateOtherValue()
+			}
+
+			function showPopup(i) {
+				type = i
+				renderTokens()
+				assetPopup.style.display = 'flex'
+				assetModal.style.animation = "slideDown 0.4s forwards"; // 应用下滑动画  
+			};
 
 			function reloadText() {
 				if (baseLang == 'EN') {
 					$('#bridgeText1').html('bridge')
 					$('#bridgeText2').html('property')
 					$('#bridgeText3').html('What you received')
+					$('#dealText9').html('Select assets')
+					$('#dealText4').html('exchange')
 				} else {
 					$('#bridgeText1').html('桥')
 					$('#bridgeText2').html('资产')
 					$('#bridgeText3').html('你收到的')
+					$('#dealText9').html('选择资产')
+					$('#dealText4').html('兑换')
 				}
 			}
 			// 点击模态框外部时，也关闭它  
@@ -398,39 +456,14 @@
 					setTimeout(() => {
 						morePopup.style.display = "none";
 					}, 200)
+				} else if (event.target == assetPopup) {
+					assetModal.style.animation = "slideUp 0.4s forwards"; // 应用上滑动画  
+					setTimeout(function() {
+						assetPopup.style.display = "none";
+					}, 40); // 动画完成后隐藏模态框 
 				}
 			}
 
-			// Init TWA
-			Telegram.WebApp.ready();
-
-			// Event occurs whenever theme settings are changed in the user's Telegram app (including switching to night mode).
-			Telegram.WebApp.onEvent('themeChanged', function() {
-				document.documentElement.className = Telegram.WebApp.colorScheme;
-			});
-
-
-
-
-
-
-			function setViewportData() {
-				var sizeEl = document.getElementById('viewport-params-size');
-				sizeEl.innerText = 'width: ' + window.innerWidth + ' x ' +
-					'height: ' + Telegram.WebApp.viewportStableHeight;
-
-				var expandEl = document.querySelector('#viewport-params-expand');
-				expandEl.innerText = 'Is Expanded: ' + (Telegram.WebApp.isExpanded ? 'true' : 'false');
-			}
-
-			Telegram.WebApp.setHeaderColor('secondary_bg_color');
-
-			setViewportData();
-			Telegram.WebApp.onEvent('viewportChanged', setViewportData);
-
-			Telegram.WebApp.onEvent('themeChanged', function() {
-				document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
-			});
 		</script>
 
 		<!-- Eruda is console for mobile browsers -->

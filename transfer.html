@@ -86,6 +86,32 @@
 			.btn {
 				margin-top: 108px;
 			}
+
+			.passwordModal {}
+
+			.modal {
+				width: 290px;
+				padding: 20px 15px;
+				background: #161616;
+				border-radius: 20px;
+				align-items: center;
+				justify-content: center;
+				animation-name: zoom;
+				animation-duration: .3s;
+				transition: .2s;
+			}
+
+			.modal .btn {
+				margin-top: 28px;
+			}
+
+			.modal input {
+				margin-top: 18px;
+			}
+
+			.mainColor {
+				margin-top: 20px;
+			}
 		</style>
 	</head>
 
@@ -107,12 +133,12 @@
 				<span class="mainColor" id="credit4">0</span>
 				<span>USDT</span>
 			</div>
-			<!-- <div class="mb-20">
-				<span>赠送算力数量：</span>
-				<span class="mainColor">1000</span>
+			<div class="mb-20">
+				<span id="transText6">可转赠数量：</span>
+				<span class="mainColor" id="transNum">0</span>
 				<span>USDT</span>
 			</div>
-			<div>
+			<!-- <div>
 				<span>合计：</span>
 				<span class="mainColor">1000</span>
 				<span>USDT</span>
@@ -131,26 +157,32 @@
 					<p id="toastMsg"></p>
 				</div>
 			</div>
+			<!-- 密码弹窗 -->
+			<div id="passwordModal" class=" popup passwordModal">
+				<div class="modal flex1">
+					<p id="transText7">请输入支付密码</p>
+					<input type="password" id="password" placeholder="请输入支付密码">
+					<div id="transText8" class="btn" onclick="onConfirm()">确认</div>
+					<a href="setPassword.html" id="setPsd" class="mainColor">设置密码</a>
+				</div>
+			</div>
 		</main>
 		<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 		<script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.16.0/js/md5.js"></script>
-		<script src="./js/http.js"></script>
 		<script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
-		<!-- <script src="https://telegram.org/js/telegram-web-app.js"></script> -->
+		<script src="./js/http.js"></script>
 		<script>
 			let addressIpt = document.getElementById('address')
 			let priceIpt = document.getElementById('price')
-			function trsAddress(address) {
-				let addr = TonConnectSDK.toUserFriendlyAddress(address)
-				localStorage.setItem('userAddress', addr)
-				return addr
-			}
+			let passwordModal = document.getElementById('passwordModal')
+			let password = document.getElementById('password')
 
 			function getCredit() {
 				apiHttp($, "/api/contract/user/index").then(res => {
 					if (res.code == 1) {
 						$('#credit4').text(res.data.credit4)
+						$('#transNum').text(res.data.zzPrice)
 					}
 				})
 			}
@@ -164,25 +196,42 @@
 			loadData()
 
 			function toTransfer() {
-				let address = addressIpt.value
-				let price = priceIpt.value
-				if (!address) {
-					return toast(baseLang == 'EN'?'Please enter the address':'请输入地址')
+
+				if (!addressIpt.value) {
+					return toast(baseLang == 'EN' ? 'Please enter the address' : '请输入地址')
 				}
-				if (Number(price) <= 0) {
-					return toast(baseLang == 'EN'?'Please enter the quantity':'请输入数量')
+				if (Number(priceIpt.value) <= 0) {
+					return toast(baseLang == 'EN' ? 'Please enter the quantity' : '请输入数量')
 				}
+				passwordModal.style.display = 'flex';
+
+			}
+
+			function onConfirm() {
+				if (!password.value) {
+					return toast(baseLang == 'EN' ? 'Please enter the payment password' : '请输入支付密码')
+				}
+				console.log(password.value);
 				apiHttp($, "/api/contract/exchange/transfer", {
-					address,
-					price
+					address: addressIpt.value,
+					price: priceIpt.value,
+					password: password.value
 				}).then(res => {
 					if (res.code == 1) {
 						toast(res.msg)
 						addressIpt.value = ''
 						priceIpt.value = ''
+						password.value = ''
 						getCredit()
+						passwordModal.style.display = 'none';
 					}
 				})
+			}
+			window.onclick = function(event) {
+				console.log('window.onclick10011111111111111');
+				if (event.target == passwordModal) {
+					passwordModal.style.display = "none";
+				}
 			}
 
 			function reloadText() {
@@ -192,76 +241,28 @@
 					$('#transText3').html('Gift quantity')
 					$('#transText4').html('Having computing power:')
 					$('#transText5').html('give')
+					$('#transText6').html('Transferable Quantity:')
+					$('#transText7').html('Please enter the payment password')
+					$('#transText8').html('confirm')
+					$('#setPsd').html('Set Password')
 					addressIpt.placeholder = "Recipient's wallet address";
 					priceIpt.placeholder = "Gift quantity";
+					password.placeholder = "Please enter the payment password";
 				} else {
 					$('#transText1').html('算力转赠')
 					$('#transText2').html('接收人钱包地址')
 					$('#transText3').html('赠送数量')
 					$('#transText4').html('拥有算力：')
 					$('#transText5').html('赠送')
+					$('#transText6').html('可转赠数量：')
+					$('#transText7').html('请输入支付密码')
+					$('#transText8').html('确认')
+					$('#setPsd').html('设置密码')
 					addressIpt.placeholder = "接收人钱包地址";
 					priceIpt.placeholder = "赠送数量";
+					password.placeholder = "请输入支付密码";
 				}
 			}
-
-			// Init TWA
-			Telegram.WebApp.ready();
-
-			// Event occurs whenever theme settings are changed in the user's Telegram app (including switching to night mode).
-			Telegram.WebApp.onEvent('themeChanged', function() {
-				document.documentElement.className = Telegram.WebApp.colorScheme;
-			});
-
-			// Function to call showPopup API
-			function showPopup() {
-				Telegram.WebApp.showPopup({
-					title: 'Title',
-					message: 'Some message',
-					buttons: [{
-							id: 'link',
-							type: 'default',
-							text: 'Open ton.org'
-						},
-						{
-							type: 'cancel'
-						},
-					]
-				}, function(btn) {
-					if (btn === 'link') {
-						Telegram.WebApp.openLink('https://ton.org/');
-					}
-				});
-			};
-
-			// Function to toggle main TWA button
-			function toggleMainButton() {
-				if (Telegram.WebApp.MainButton.isVisible) {
-					Telegram.WebApp.MainButton.hide();
-				} else {
-					Telegram.WebApp.MainButton.show();
-				}
-			};
-
-
-
-			function setViewportData() {
-				var sizeEl = document.getElementById('viewport-params-size');
-				sizeEl.innerText = 'width: ' + window.innerWidth + ' x ' +
-					'height: ' + Telegram.WebApp.viewportStableHeight;
-
-				var expandEl = document.querySelector('#viewport-params-expand');
-				expandEl.innerText = 'Is Expanded: ' + (Telegram.WebApp.isExpanded ? 'true' : 'false');
-			}
-
-			Telegram.WebApp.setHeaderColor('secondary_bg_color');
-
-			setViewportData();
-			Telegram.WebApp.onEvent('viewportChanged', setViewportData);
-
-			Telegram.WebApp.onEvent('themeChanged', function() {
-				document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
-			});
 		</script>
 
 		<!-- Eruda is console for mobile browsers -->

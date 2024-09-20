@@ -1,11 +1,74 @@
 const baseUrl = 'https://ton.babysdogeswap.net'
 let token = localStorage.getItem('token') || ''
 let baseLang = localStorage.getItem('lang') || 'CN'
+let bdsAddress = ''
+let burnAddress = ''
+let exchangeAddress = ''
+let usdtAddress = ''
+let tokensList = []
+let myAddress = ''
+
+function initTokens() {
+	tokensList = [{
+			name: 'BDS',
+			address: bdsAddress,
+			logo: './images/bds.png'
+		}, {
+			name: 'USDT',
+			address: usdtAddress,
+			logo: './images/usdt.png'
+		}, {
+			name: 'TON',
+			address: 'TON',
+			logo: './images/ton.png'
+		}, {
+			name: 'DOGS',
+			address: 'EQCvxJy4eG8hyHBFsZ7eePxrRsUQSFE_jpptRAYBmcG_DOGS',
+			logo: './images/dogs.png'
+		}, {
+			name: 'NOT',
+			address: 'EQAvlWFDxGF2lXm67y4yzC17wYKD9A0guwPkMs1gOsM__NOT',
+			logo: './images/not_logo.png'
+		}, {
+			name: 'REDO',
+			address: 'EQBZ_cafPyDr5KUTs0aNxh0ZTDhkpEZONmLJA2SNGlLm4Cko',
+			logo: './images/resistance-dog.png'
+		},
+		// {
+		// 	name: 'HAMSTER',
+		// 	address: 'EQACdLIfYndNS6mQ-Mb31mJjj0RBabGxqDQMBQAqSw5xbuer',
+		// 	logo: './images/hams.png'
+		// }, 
+		{
+			name: 'STON',
+			address: 'EQA2kCVNwVsil2EM2mB0SkXytxCqQjS4mttjDpnXmwG9T6bO',
+			logo: './images/ston.png'
+		}
+	]
+}
+
 $('#setLang').text(baseLang)
 const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
 	manifestUrl: 'https://Babydogeswap-ai.github.io/babydogeswap/tonconnect-manifest.json',
 	buttonRootId: 'ton-connect'
 });
+getTonProof()
+
+function getTonProof() {
+	apiHttp($, "/api/contract/auth/getCodeInfo").then(res => {
+		if (res.code == 1) {
+			tonConnectUI.setConnectRequestParameters({
+				state: 'loading'
+			});
+			tonConnectUI.setConnectRequestParameters({
+				state: "ready",
+				value: {
+					tonProof: res.data.payload
+				}
+			});
+		}
+	})
+}
 
 function updateToken() {
 	var tokenPramas = { // 要发送给后端的数据
@@ -13,6 +76,13 @@ function updateToken() {
 		lang: baseLang == 'EN' ? 'en' : 'zh-cn'
 	}
 	return tokenPramas
+}
+
+function trsAddress(address) {
+	let addr = TonConnectSDK.toUserFriendlyAddress(address)
+	localStorage.setItem('userAddress', addr)
+	$('#walletAddress').text(sliceAddress(addr, 4, 4))
+	return addr
 }
 
 function apiHttp($, url, params = {}) {
@@ -43,15 +113,20 @@ function setFooter(data) {
 		item.innerHTML = data.name
 	})
 	document.title = data.name;
+	bdsAddress = data.bdsAddress
+	burnAddress = data.burnAddress
+	exchangeAddress = data.exchangeAddress
+	usdtAddress = data.usdtAddress
+	localStorage.setItem('usdtAddress', usdtAddress)
+	localStorage.setItem('burnAddress', burnAddress)
+	localStorage.setItem('exchangeAddress', exchangeAddress)
+	localStorage.setItem('bdsAddress', bdsAddress)
+	initTokens()
 	let ourCommunity = document.getElementById('ourCommunity')
 	let dt1 = document.getElementById('dt1')
 	let dt2 = document.getElementById('dt2')
 	let dt3 = document.getElementById('dt3')
-	// let addr = localStorage.getItem('address')
-	// let walletAddress = document.getElementById('walletAddress')
-	// if (walletAddress) {
-	// 	walletAddress.innerHTML = sliceAddress(addr, 4, 4)
-	// }
+	
 	if (dt1) {
 		dt1.innerHTML = ''
 		data.article1.forEach(item => {
@@ -132,14 +207,20 @@ function extractInviteCode(url) {
 	return null;
 }
 
+function getIframeEle(elementId, frameId = 'modalFrame') {
+	var iframe = document.getElementById(frameId);
+	var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+	// 获取iframe中的元素
+	var elementInIframe = iframeDoc.getElementById(elementId); // 假设iframe.html中有一个id为'elementId'的元素
+	return elementInIframe
+};
+
 function showMore(e) {
-	console.log('xxxxx', location.href);
 	morePopup.style.display = 'flex';
 	moreModal.style.animation = "toLeftAnimate 0.4s forwards"; // 应用上滑动画  
 }
 // 点击模态框外部时，也关闭它  
 window.onclick = function(event) {
-	console.log('window.onclick10011111111111111');
 	if (event.target == popup) {
 		popup.style.display = "none";
 	} else if (event.target == popup1) {
@@ -180,8 +261,6 @@ function formatTimestamp(timestamp, type) {
 }
 
 function toast(msg) {
-	// alert(msg)
-	// Telegra.WebApp.showAlert(msg)
 	document.getElementById("toastModal").style.display = "block";
 	document.getElementById("toastMsg").innerHTML = msg
 	setTimeout(() => {
@@ -190,9 +269,7 @@ function toast(msg) {
 }
 
 async function copy() {
-	let addr = localStorage.getItem('userAddress')
-	// navigator.clipboard.writeText(addr)
-	copyTextToClipboard(addr)
+	copyTextToClipboard(myAddress)
 	if (baseLang == 'EN') {
 		toast('Replicating Success')
 	} else {
@@ -222,25 +299,37 @@ function copyTextToClipboard(text) {
 		// 执行复制操作  
 		const successful = document.execCommand('copy');
 		const msg = successful ? 'successful' : 'unsuccessful';
-		console.log('Copying text command was ' + msg);
 	} catch (err) {
-		console.error('Oops, unable to copy', err);
 	}
 
 	// 移除textarea  
 	document.body.removeChild(textarea);
 }
+let signPayload = ''
 window.addEventListener('ton-connect-connection-completed', (event) => {
 	console.log('Transaction init==============', event, event.detail.wallet_address);
+	if (tonConnectUI.connector._wallet.connectItems) {
+		let oriAddress = tonConnectUI.connector._wallet.account.address
+		let network = tonConnectUI.connector._wallet.account.chain
+		let public_key = tonConnectUI.connector._wallet.account.publicKey
+		let state_init = tonConnectUI.connector._wallet.account.walletStateInit
+		let proof = tonConnectUI.connector._wallet.connectItems.tonProof.proof
+		proof.state_init = state_init
+		signPayload = {
+			address: oriAddress,
+			network,
+			public_key,
+			proof
+		}
+
+	}
 	let inviteCode = extractInviteCode(location.href)
-	console.log('inviteCode.........', inviteCode);
 	let address = event.detail.wallet_address
 	let preAddress = localStorage.getItem('address')
-	console.log(11111111111, localStorage.getItem('address'));
-	console.log(222222222222, address);
 	localStorage.setItem('address', address)
-	let addr = trsAddress(address)
-
+	let addr = TonConnectSDK.toUserFriendlyAddress(address)
+	$('#walletAddress') && $('#walletAddress').text(sliceAddress(addr, 4, 4))
+	myAddress = addr
 	if (!token || preAddress != address) {
 		setTimeout(() => {
 			login(addr, inviteCode)
@@ -249,10 +338,13 @@ window.addEventListener('ton-connect-connection-completed', (event) => {
 		loadData()
 	}
 });
+window.addEventListener('ton-connect-connection-started', (event) => {
+	// console.log('链接钱包前-------------', event, event.detail.wallet_address);
 
+});
 
 window.addEventListener('ton-connect-disconnection', (event) => {
-	console.log('断开连接！！！！！！！', event.detail.wallet_address);
+	// console.log('断开连接！！！！！！！', event.detail.wallet_address);
 	localStorage.clear()
 	token = ''
 });
@@ -260,13 +352,13 @@ window.addEventListener('ton-connect-disconnection', (event) => {
 function login(address, inviteCode) {
 	let res = md5(address);
 	let sign = md5(res);
-	console.log(333, sign);
 	apiHttp($, "/api/contract/auth/login", {
 		address: address,
 		inviteCode: inviteCode || '',
-		sign: sign
+		sign: sign,
+		 body: JSON.stringify(signPayload)
+
 	}).then(res => {
-		console.log(res);
 		if (res.code == 1) {
 			token = res.data.userInfo.token
 			updateToken()
@@ -275,6 +367,8 @@ function login(address, inviteCode) {
 			setTimeout(() => {
 				loadData()
 			}, 100)
+		} else {
+			tonConnectUI.disconnect();
 		}
 	})
 }
@@ -289,7 +383,7 @@ function getIndexInfo() {
 	})
 }
 
-function showLoading() {
+async function showLoading() {
 	document.getElementById("loadingModal").style.display = "block";
 }
 
@@ -300,7 +394,6 @@ let setLang = document.getElementById('setLang')
 if (setLang) {
 	setLang.addEventListener('click', () => {
 		let lang = $('#setLang').text()
-		console.log(lang);
 		if (lang == 'CN') {
 			baseLang = 'EN'
 		} else {
@@ -310,6 +403,19 @@ if (setLang) {
 		localStorage.setItem('lang', baseLang)
 		location.reload()
 	})
+}
+let balance = ''
+async function initWallet() {
+	let tonweb = new TonWeb(new TonWeb.HttpProvider('https://toncenter.com/api/v2/jsonRPC', {
+		apiKey: '682589248b2c93bda9856a97cca0179ed0d0f3a0c7a8829e671b049fdf408754'
+	}));
+	const jettonMinter = new TonWeb.token.jetton.JettonMinter(tonweb.provider, {
+		address: usdtAddress
+	});
+	const jettonAddress = await jettonMinter.getJettonWalletAddress(new TonWeb.utils.Address(myAddress));
+	let jettonWalletAddress = jettonAddress.toString(true, true, true)
+	return jettonWalletAddress
+
 }
 
 function loadFooterText() {
@@ -328,6 +434,8 @@ function loadFooterText() {
 		$('#moreText3') && $('#moreText3').html('My assets')
 		$('#moreText4') && $('#moreText4').html('the charts')
 		$('#moreText5') && $('#moreText5').html('invite')
+		$('#moreText6') && $('#moreText6').html('payment password')
+
 		$('#loadText') && $('#loadText').html('loading...')
 
 	} else {
@@ -345,6 +453,7 @@ function loadFooterText() {
 		$('#moreText3') && $('#moreText3').html('我的资产')
 		$('#moreText4') && $('#moreText4').html('排行榜')
 		$('#moreText5') && $('#moreText5').html('邀请')
+		$('#moreText6') && $('#moreText6').html('支付密码')
 		$('#loadText') && $('#loadText').html('加载中...')
 
 	}

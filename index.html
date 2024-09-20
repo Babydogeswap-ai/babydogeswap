@@ -35,7 +35,7 @@
 				position: absolute;
 				right: 0;
 				bottom: 0;
-				width: 133px;
+				width:133px;
 				height: 133px;
 			}
 
@@ -392,6 +392,10 @@
 						<span id="moreText5">邀请</span>
 						<img src="./images/right.png" alt="">
 					</a>
+					<a class="flex-bw" href="setPassword.html">
+						<span id="moreText6">支付密码</span>
+						<img src="./images/right.png" alt="">
+					</a>
 				</div>
 			</div>
 			<!-- 加载弹窗 -->
@@ -413,21 +417,8 @@
 		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 		<script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.16.0/js/md5.js"></script>
 		<script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/gh/orbs-network/ton-access@2.2.2/dist/index.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/gh/toncenter/tonweb/dist/tonweb.js"></script>
-		<script>
-			function trsAddress(address) {
-				let addr = TonConnectSDK.toUserFriendlyAddress(address)
-				localStorage.setItem('userAddress', addr)
-				console.log('addr1111111', TonConnectSDK.toUserFriendlyAddress(address));
-				console.log('addr222222', TonConnectSDK.toUserFriendlyAddress(address, true));
-				// $('#walletAddress').innerHTML = sliceAddress(addr, 4, 4)
-				$('#walletAddress').text(sliceAddress(addr, 4, 4))
-				return addr
-			}
-		</script>
 		<script src="./js/http.js"></script>
-		<!-- <script src="https://telegram.org/js/telegram-web-app.js"></script> -->
 		<script>
 			async function loadData() {
 				await showLoading()
@@ -435,83 +426,10 @@
 				await getIndexInfo()
 				await reloadText()
 				await loadFooterText()
-				// getBalance()
-				// transferUsdt()
 				hideLoading()
 
 			}
-
-			function getBalance() {
-				TonAccess.getHttpEndpoint().then((endpoint) => { // get the decentralized RPC endpoint
-					const tonweb = new TonWeb(new TonWeb.HttpProvider(endpoint)); // initialize tonweb library
-					// make some query to mainnet
-					tonweb.getBalance("UQB18PPOHM1cVR0Tcg5OmqYtFa88xJym4_5koho29nwMqLuf").then((balance) => {
-						console.log(balance);
-					});
-				});
-			}
-
-			async function transferUsdt() {
-				// first 4 bytes are tag of text comment
-				
-				const tonweb = new TonWeb(new TonWeb.HttpProvider('https://toncenter.com/api/v2/jsonRPC', {apiKey: '682589248b2c93bda9856a97cca0179ed0d0f3a0c7a8829e671b049fdf408754'}));
-				// console.log('tonweb', tonweb);
-				// const wallet = tonweb.wallet.create({
-				// 	publicKey: "5df54a31a53b863b29f69ceef38dd664e2101b068c38b3ad512f78dcc83e1eca"
-				// });
-				const wallet = tonweb.wallet.create({
-					address: "UQB18PPOHM1cVR0Tcg5OmqYtFa88xJym4_5koho29nwMqLuf"
-				});
-				// console.log('wallet', wallet);
-				const seqno = await wallet.methods.seqno().call();
-				console.log(999,wallet,seqno);
-				// console.log();
-				const comment = new Uint8Array([...new Uint8Array(4), ...new TextEncoder().encode('text comment')]);
-				// console.log('comment', comment);
-				const jettonMinter = new TonWeb.token.jetton.JettonMinter(tonweb.provider, {
-					address: 'EQD1Cb3m00I9DhpDh1hi0sJecUc9u4p4XsN_X_Hrse2-x543'
-				});
-				const jettonWalletAddress = await jettonMinter.getJettonWalletAddress(new TonWeb.utils.Address(
-					'UQDFe6dmOl0nYrfXDa-lW-TbYoMtyGEeBYd7i2YymlEuFWVK'));
-
-				// It is important to always check that wallet indeed is attributed to desired Jetton Master:
-				const jettonWallet = new TonWeb.token.jetton.JettonWallet(tonweb.provider, {
-					address: jettonWalletAddress
-				});
-				console.log('jettonWallet,', jettonWallet);
-				console.log(111, TonWeb.utils.toNano(
-					'500'));
-				console.log(2222, new TonWeb.utils.Address(
-					'0QB18PPOHM1cVR0Tcg5OmqYtFa88xJym4_5koho29nwMqAAV'
-				));
-				const nacl = TonWeb.utils.nacl; // use nacl library for key pairs
-				const keyPair = nacl.sign.keyPair(); // create new random key pair
-				const res = await jettonWallet.createTransferBody({
-					jettonAmount: TonWeb.utils.toNano(
-						'500'), // Jetton amount (in basic indivisible units)
-					toAddress: new TonWeb.utils.Address(
-						'0QB18PPOHM1cVR0Tcg5OmqYtFa88xJym4_5koho29nwMqAAV'
-					), // recepient user's wallet address (not Jetton wallet)
-					forwardAmount: TonWeb.utils.toNano(
-						'0.01'), // some amount of TONs to invoke Transfer notification message
-					forwardPayload: comment, // text comment for Transfer notification message
-					responseAddress: new TonWeb.utils.Address(
-						'UQB18PPOHM1cVR0Tcg5OmqYtFa88xJym4_5koho29nwMqLuf'
-					), // return the TONs after deducting commissions back to the sender's wallet address
-				})
-				console.log('res', res);
-
-				await wallet.methods.transfer({
-					secretKey: keyPair.secretKey ,
-					// secretKey: "5df54a31a53b863b29f69ceef38dd664e2101b068c38b3ad512f78dcc83e1eca",
-					toAddress: 'EQD1Cb3m00I9DhpDh1hi0sJecUc9u4p4XsN_X_Hrse2-x543', // address of Jetton wallet of Jetton sender
-					amount: TonWeb.utils.toNano('0.05'), // total amount of TONs attached to the transfer message
-					seqno: 1,
-					payload: res,
-					sendMode: 3,
-				}).send()
-			}
-
+			
 			function reloadText() {
 				if (baseLang == 'EN') {
 					$('#indexText1').html('transaction')
@@ -541,14 +459,6 @@
 
 			function getSign() {
 				apiHttp($, "/api/contract/sign/index").then(res => {
-					// if (res.code == 1) {
-					// 	if (res.data.sign == 0) {
-					// 		// 签到弹窗显示
-					// 		popup1.style.display = 'flex';
-					// 		$('#signPrice').text(res.data.price)
-					// 		toReceive()
-					// 	}
-					// }
 					console.log('签到接口', res.data);
 					if (res.code == 1 && res.data.sign == 0) {
 						// if (res.data.sign == 0) {
@@ -573,23 +483,9 @@
 			function closePopup1() {
 				popup1.style.display = 'none'
 			}
-			// Telegram.WebApp.openLink('https://ton.org/')
+			
 
-
-
-
-
-			// async function toTransfer() {
-			// 	console.log('?????????');
-			// 	const transaction = {
-			// 		messages: [{
-			// 			address: "0:412410771DA82CBA306A55FA9E0D43C9D245E38133CB58F1457DFB8D5CD8892F", // destination address
-			// 			amount: "1" //Toncoin in nanotons
-			// 		}]
-			// 	}
-
-			// 	const result = await tonConnectUI.sendTransaction(transaction)
-			// }
+			
 		</script>
 		<!-- Eruda is console for mobile browsers -->
 		<script src="https://cdn.jsdelivr.net/npm/eruda"></script>

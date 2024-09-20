@@ -415,7 +415,7 @@
 					<span id="tabbarText5">社区代币</span>
 				</a>
 			</div>
-			
+
 			<!-- 更多菜单 -->
 			<div class="popup rightPopup" id="morePopup">
 				<div class="moreModal flex1" id="moreModal">
@@ -443,6 +443,10 @@
 						<span id="moreText5">邀请</span>
 						<img src="./images/right.png" alt="">
 					</a>
+					<a class="flex-bw" href="setPassword.html">
+						<span id="moreText6">支付密码</span>
+						<img src="./images/right.png" alt="">
+					</a>
 				</div>
 			</div>
 			<!-- 加载弹窗 -->
@@ -462,39 +466,75 @@
 		<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 		<script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.16.0/js/md5.js"></script>
-		<script src="./js/http.js"></script>
 		<script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
-		<!-- <script src="https://telegram.org/js/telegram-web-app.js"></script> -->
+		<script src="https://cdn.jsdelivr.net/gh/toncenter/tonweb/dist/tonweb.js"></script>
+		<script src="./js/http.js"></script>
 		<script>
 			let percent = 0
 			let linePrice = 1
 			let bei = 1
 			let myInput = document.getElementById('myInput')
 
-			function trsAddress(address) {
-				let addr = TonConnectSDK.toUserFriendlyAddress(address)
-				localStorage.setItem('userAddress', addr)
-				$('#walletAddress').text(sliceAddress(addr, 4, 4))
-				return addr
-			}
-
 			function createBurn() {
 				if (Number(myInput.value) <= 0) {
-					if(baseLang == 'EN'){
-						return toast('Please enter the extraction quantity')
-					}else{
-						return toast('请输入提取数量')
+					if (baseLang == 'EN') {
+						return toast('Please enter the quantity')
+					} else {
+						return toast('请输入数量')
 					}
 				}
+				showLoading()
 				apiHttp($, "/api/contract/burn/createBurn", {
 					price: myInput.value,
 				}).then(res => {
 					if (res.code == 1) {
-						toast(res.msg)
-						myInput.value = ''
-						getBurn()
+						// toast(res.msg)
+						// myInput.value = ''
+						// getBurn()
+						getTransfer(res.data.userPrice)
+					}else{
+						hideLoading()
 					}
 				})
+			}
+
+			function getTransfer(price) {
+				let burnAddress = localStorage.getItem('burnAddress')
+				apiHttp($, "/api/contract/index/getTradeInfo", {
+					address: burnAddress,
+					amount: price / 1000
+				}).then(res => {
+					if (res.code == 1) {
+						toTransfer(res.data.tx)
+					}else{
+						hideLoading()
+					}
+				})
+			}
+
+			async function toTransfer(payload) {
+				let jettonWalletAddress = await initWallet()
+				console.log('jettonWalletAddress------------',jettonWalletAddress);
+				try {
+					const transaction = {
+						validUntil: Math.floor(Date.now() / 1000) + 360,
+						messages: [{
+							address: jettonWalletAddress, // destination address
+							amount: "50000000", //Toncoin in nanotons
+							payload: payload
+						}]
+					}
+					const result = await tonConnectUI.sendTransaction(transaction)
+					console.log(result);
+					hideLoading()
+					toast(baseLang == 'EN' ? 'Destruction successful' : '销毁成功')
+					myInput.value = ''
+					getBurn()
+				} catch (e) {
+					hideLoading()
+					console.log(777, e, typeof e);
+					toast(e)
+				}
 			}
 
 			function getBurn() {
@@ -505,7 +545,7 @@
 						$('#userPrice').text(res.data.userPrice)
 						$('#bei').text(res.data.bei)
 						$('#dayCount').text(res.data.dayCount)
-						$('#tokenB').text(res.data.dayCount)
+						$('#tokenB').text(res.data.ltNum)
 						$('#countCredit4').text(res.data.countCredit4)
 						$('#userCredit4').text(res.data.userCredit4)
 						$('#inputNum').text(0)
@@ -569,63 +609,7 @@
 
 				}
 			}
-			// Init TWA
-			Telegram.WebApp.ready();
-
-			// Event occurs whenever theme settings are changed in the user's Telegram app (including switching to night mode).
-			Telegram.WebApp.onEvent('themeChanged', function() {
-				document.documentElement.className = Telegram.WebApp.colorScheme;
-			});
-
-			// Function to call showPopup API
-			function showPopup() {
-				Telegram.WebApp.showPopup({
-					title: 'Title',
-					message: 'Some message',
-					buttons: [{
-							id: 'link',
-							type: 'default',
-							text: 'Open ton.org'
-						},
-						{
-							type: 'cancel'
-						},
-					]
-				}, function(btn) {
-					if (btn === 'link') {
-						Telegram.WebApp.openLink('https://ton.org/');
-					}
-				});
-			};
-
-			// Function to toggle main TWA button
-			function toggleMainButton() {
-				if (Telegram.WebApp.MainButton.isVisible) {
-					Telegram.WebApp.MainButton.hide();
-				} else {
-					Telegram.WebApp.MainButton.show();
-				}
-			};
-
-
-
-			function setViewportData() {
-				var sizeEl = document.getElementById('viewport-params-size');
-				sizeEl.innerText = 'width: ' + window.innerWidth + ' x ' +
-					'height: ' + Telegram.WebApp.viewportStableHeight;
-
-				var expandEl = document.querySelector('#viewport-params-expand');
-				expandEl.innerText = 'Is Expanded: ' + (Telegram.WebApp.isExpanded ? 'true' : 'false');
-			}
-
-			Telegram.WebApp.setHeaderColor('secondary_bg_color');
-
-			setViewportData();
-			Telegram.WebApp.onEvent('viewportChanged', setViewportData);
-
-			Telegram.WebApp.onEvent('themeChanged', function() {
-				document.body.setAttribute('style', '--bg-color:' + Telegram.WebApp.backgroundColor);
-			});
+			
 		</script>
 
 		<!-- Eruda is console for mobile browsers -->
